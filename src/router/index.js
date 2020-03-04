@@ -32,8 +32,8 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
+    path: '/admin/login',
+    component: () => import('@/views/admin/login/index'),
     hidden: true
   },
 
@@ -44,75 +44,63 @@ export const constantRoutes = [
   },
 
   {
-    path: '/',
+    path: '/admin',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/admin/dashboard',
     children: [{
-      path: '/dashboard',
+      path: '/admin/dashboard',
       name: 'dashboard',
-      component: () => import('@/views/dashboard/index'),
+      component: () => import('@/views/admin/dashboard/index'),
       meta: { title: '看板', icon: 'dashboard' }
     }]
   },
   // 标签管理
   {
-    path: '/tag',
+    path: '/admin/tag',
     component: Layout,
     children: [
       {
-        path: 'list',
+        path: '/admin/tag/list',
         name: 'TagList',
-        component: () => import('@/views/tag/index'),
+        component: () => import('@/views/admin/tag/index'),
         meta: { title: '标签管理', icon: 'table' }
       }
     ]
   },
   // 文章管理
   {
-    path: '/article',
+    path: '/admin/article',
     component: Layout,
-    redirect: '/list',
+    redirect: '/admin/article/list',
     children: [
       {
-        path: 'list',
+        path: '/admin/article/list',
         name: 'ArticleList',
-        component: () => import('@/views/article/index'),
+        component: () => import('@/views/admin/article/index'),
         meta: { title: '文章列表', icon: 'form' }
       },
       {
-        path: 'edit-article',
+        path: '/admin/article/edit',
         name: 'EditArticle',
         hidden: true,
-        component: () => import('@/views/article/editArticle'),
+        component: () => import('@/views/admin/article/editArticle'),
         meta: { title: '文章编辑', icon: 'form' }
       }
     ]
   },
-  // 课程管理
+  // 站点设置
   {
-    path: '/course',
+    path: '/admin/settings',
     component: Layout,
     children: [
       {
-        path: 'course-list',
-        name: 'CourseList',
-        component: () => import('@/views/course/index'),
-        meta: { title: '课程管理', icon: 'nested' }
+        path: '/admin/site/settings',
+        name: 'SiteSettings',
+        component: () => import('@/views/admin/site/index'),
+        meta: { title: '站点设置', icon: 'table' }
       }
     ]
   },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

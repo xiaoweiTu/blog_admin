@@ -17,6 +17,12 @@
             </el-select>
           </el-form-item>
           <el-form-item>
+            <el-select v-model="searchParams.is_series" placeholder="是否系列"  filterable clearable>
+              <el-option label="是" :value="1"></el-option>
+              <el-option label="否" :value="2"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
             <el-input v-model="searchParams.tag_level" placeholder="排序等级"></el-input>
           </el-form-item>
         </el-form>
@@ -63,6 +69,15 @@
             </template>
           </el-table-column>
           <el-table-column
+                  prop="is_series_name"
+                  label="是否系列"
+                  align="center"
+          >
+            <template slot-scope="{row}">
+              <el-tag :type="row.is_series | statusFilter">{{ row.is_series_name }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
                   prop="tag_level"
                   label="标签等级"
                   align="center"
@@ -99,8 +114,8 @@
 </template>
 
 <script>
-import { getTagList, tagDel } from '../../api/tag'
-import { getStatusMapping, getTypeMapping } from '../../api/status'
+import { getTagList, tagDel } from '../../../api/tag'
+import { getStatusMapping, getTypeMapping } from '../../../api/status'
 import editTag from './components/edit'
 
 export default {
@@ -127,7 +142,8 @@ export default {
         tag_type: [],
         tag_name: '',
         tag_status: [],
-        tag_level: ''
+        tag_level: '',
+        is_series: ''
       },
       tagList: [],
       typeMappings: [],

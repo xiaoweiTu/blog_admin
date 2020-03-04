@@ -50,15 +50,15 @@
                       <el-button type="success" class="fr mt-15" @click="submitArticle">提交</el-button>
                   </el-form-item>
                 </el-form>
-            </el-col>
+          </el-col>
         </el-row>
     </div>
 </template>
 
 <script>
 import MarkdownEditor from '@/components/MarkdownEditor'
-import { articleSave, getTags, getArticleRow } from '../../api/article'
-import { getStatusMapping, getTypeMapping } from '../../api/status'
+import { articleSave, getTags, getArticleRow } from '../../../api/article'
+import { getStatusMapping, getTypeMapping } from '../../../api/status'
 
 export default {
   name: 'EditArticle',

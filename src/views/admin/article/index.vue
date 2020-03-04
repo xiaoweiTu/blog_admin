@@ -167,8 +167,8 @@
 </template>
 
 <script>
-import { getArticleList, getTags, articleDel } from '../../api/article'
-import { getStatusMapping, getTypeMapping } from '../../api/status'
+import { getArticleList, getTags, articleDel } from '../../../api/article'
+import { getStatusMapping, getTypeMapping } from '../../../api/status'
 
 export default {
   filters: {

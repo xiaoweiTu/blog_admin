@@ -20,6 +20,12 @@
                         <el-option v-for="(statusItem,key) of statusMappings" :key="key" :label="statusItem" :value="Number(key)"></el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="是否系列" prop="is_series">
+                    <el-select v-model="tagData.is_series" placeholder="请选择状态">
+                        <el-option  label="是" :value="1"></el-option>
+                        <el-option  label="否" :value="2"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="标签排序" prop="tag_level">
                     <el-input v-model="tagData.tag_level" type="number" min="1" max="128" class="tag-input" placeholder="请选择排序等级"></el-input>
                 </el-form-item>
@@ -32,8 +38,8 @@
 </template>
 
 <script>
-import { getTypeMapping, getStatusMapping } from '../../../api/status'
-import { tagSave } from '../../../api/tag'
+import { getTypeMapping, getStatusMapping } from '../../../../api/status'
+import { tagSave } from '../../../../api/tag'
 
 export default {
   name: 'EditTag',
@@ -52,11 +58,10 @@ export default {
   },
   computed: {
     title() {
-      return this.tagData.id ? '编辑Tag' : '新增Tag'
+      return this.tagData.id ? '编辑标签' : '新增标签'
     }
   },
   created() {
-    console.log(this.tagData)
     this.typeMapping()
     this.statsMapping()
   },
