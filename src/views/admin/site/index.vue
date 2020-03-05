@@ -9,13 +9,15 @@
           <el-form-item label-width="150px" label="网站描述" align="left" prop="site_desc">
             <el-input v-model="settings.site_desc" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" />
           </el-form-item>
+          <el-form-item label-width="150px" label="网站公告" align="left" prop="site_notice">
+            <el-input v-model="settings.site_notice" type="textarea" :autosize="{ minRows: 4, maxRows: 8}" />
+          </el-form-item>
           <el-form-item label-width="150px" label="网站icon" align="left" prop="site_icon">
             <el-upload
               :action="uploadUrl"
               :file-list="uploadedFileList"
               list-type="picture-card"
               :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove"
               :on-exceed="onExceed"
               :on-success="uploadSuccess"
               name="image"
@@ -57,6 +59,24 @@ export default {
         site_icon: ''
       },
       settingsRules: {
+        site_name: [
+          { required: true, message: '请输入网站名称', trigger: 'blur' }
+        ],
+        site_desc: [
+          { required: true, message: '请输入网站描述', trigger: 'blur' }
+        ],
+        site_notice: [
+          { required: true, message: '请输入网站公告', trigger: 'blur' }
+        ],
+        site_icon: [
+          { required: true, message: '请上传网站icon', trigger: 'blur' }
+        ],
+        site_record: [
+          { required: true, message: '请输入网站备案号', trigger: 'blur' }
+        ],
+        site_owner: [
+          { required: true, message: '请输入网站所属人', trigger: 'blur' }
+        ]
       },
       uploadUrl: '',
       dialogVisible: false,
@@ -73,25 +93,31 @@ export default {
       const result = await getSettings()
       if (result.code === 1 && result.data !== null) {
         this.settings = result.data
+        this.imageUrl = result.data.site_icon_url
         this.uploadedFileList.push({
           name: 'site_icon',
-          url: process.env.VUE_APP_BASE_API_UPLOADED + this.settings.site_icon
+          url: result.data.site_icon_url
         })
       }
     },
-    async submitSettings() {
-      const result = await settingsSave(this.settings)
-      if (result.code !== 1) {
-        this.$message({
-          message: result.msg,
-          type: 'error'
-        })
-      } else {
-        this.$message({
-          message: result.msg,
-          type: 'success'
-        })
-      }
+    submitSettings() {
+      this.$refs.settings.validate((valid)=> {
+        if (valid) {
+          settingsSave(this.settings).then((result) => {
+            if (result.code !== 1) {
+              this.$message({
+                message: result.msg,
+                type: 'error'
+              })
+            } else {
+              this.$message({
+                message: result.msg,
+                type: 'success'
+              })
+            }
+          })
+        }
+      })
     },
     uploadSuccess(response) {
       if (response.code !== 1) {
@@ -100,12 +126,8 @@ export default {
         this.settings.site_icon = response.data
       }
     },
-    handleRemove(file, fileList) {
-      console.log(file, fileList)
-    },
     handlePictureCardPreview() {
       this.dialogVisible = true
-      this.imageUrl = process.env.VUE_APP_BASE_API_UPLOADED + this.settings.site_icon
     },
     onExceed() {
       this.$alert('只能上传一个icon!')

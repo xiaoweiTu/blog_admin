@@ -8,6 +8,14 @@ export function getArticleList(params) {
   })
 }
 
+export function getHomeArticleList(params) {
+  return request({
+    url: '/api/home/article',
+    method: 'get',
+    params
+  })
+}
+
 export function getArticleRow(params) {
   return request({
     url: '/api/article/row',
@@ -30,6 +38,8 @@ export function articleSave(data) {
     data
   })
 }
+
+
 
 export function articleDel(data) {
   return request({

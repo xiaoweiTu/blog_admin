@@ -248,7 +248,7 @@ export default {
     currentChange(page) {
       this.searchParams.page = page
       this.fetchData()
-    },
+    }
   }
 }
 </script>

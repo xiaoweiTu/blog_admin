@@ -76,3 +76,10 @@ div:focus {
 .mb-20 {
   margin-bottom: 20px;
 }
+.el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li{
+  color:#909399;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: #fef0f0;
+  color: #f56c6c;
+}

@@ -5,6 +5,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import HomeLayout from '@/homeLayout'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -42,7 +43,17 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
+  {
+    path: '/',
+    component: HomeLayout,
+    redirect: '/home',
+    children: [{
+      path: '/home',
+      name: 'home',
+      component: () => import('@/views/home/index/index'),
+      meta: { title: '首页', icon: 'dashboard' }
+    }]
+  },
   {
     path: '/admin',
     component: Layout,
