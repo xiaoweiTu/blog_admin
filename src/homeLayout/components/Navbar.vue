@@ -5,7 +5,7 @@
       <el-row>
         <el-col :span="6">
           <div class="site-logo">
-            <img :src='site_icon_url' alt="icon" class="site-icon">
+            <img :src="site_icon_url" alt="icon" class="site-icon">
             <div class="site-name-box">
               <div class="site-name">{{ site_name }}</div>
               <div class="site-desc">{{ site_desc }}----{{ site_owner }}</div>
@@ -30,6 +30,12 @@ export default {
       'site_owner',
       'site_icon_url'
     ])
+  },
+  updated() {
+    document.title = this.site_name
+    document.getElementById('site-icon').setAttribute('href', this.site_icon_url)
+    document.getElementById('site-owner').setAttribute('href', this.site_owner)
+    document.getElementById('site-desc').setAttribute('href', this.site_desc)
   }
 }
 </script>
