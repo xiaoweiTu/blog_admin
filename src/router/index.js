@@ -47,12 +47,23 @@ export const constantRoutes = [
     path: '/',
     component: HomeLayout,
     redirect: '/home',
-    children: [{
-      path: '/home',
-      name: 'home',
-      component: () => import('@/views/home/index/index'),
-      meta: { title: '首页', icon: 'dashboard' }
-    }]
+    meta: { title: '首页', icon: 'dashboard' },
+    children: [
+      {
+        path: '/home',
+        name: 'home',
+        component: () => import('@/views/home/index/index'),
+        meta: { title: '首页', icon: 'dashboard' },
+        hidden: true
+      },
+      {
+        path: '/article/:article_id',
+        name: 'homeArticle',
+        component: () => import('@/views/home/article/index'),
+        meta: { title: '文章', icon: 'book' },
+        hidden: true
+      }
+    ]
   },
   {
     path: '/admin',
@@ -103,12 +114,20 @@ export const constantRoutes = [
   {
     path: '/admin/settings',
     component: Layout,
+    meta: { title: '站点管理', icon: 'table' },
+    redirect: '/admin/site/settings',
     children: [
       {
         path: '/admin/site/settings',
         name: 'SiteSettings',
         component: () => import('@/views/admin/site/index'),
         meta: { title: '站点设置', icon: 'table' }
+      },
+      {
+        path: '/admin/site/friend_link',
+        name: 'friendLink',
+        component: () => import('@/views/admin/site/friend_link'),
+        meta: { title: '友情链接', icon: 'link' }
       }
     ]
   },

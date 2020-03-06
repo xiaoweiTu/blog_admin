@@ -35,6 +35,9 @@
           <el-form-item label-width="150px" label="站长" align="left" prop="site_owner">
             <el-input v-model="settings.site_owner" type="input" />
           </el-form-item>
+          <el-form-item label-width="150px" label="站长有话" align="left" prop="site_owner_desc">
+            <el-input v-model="settings.site_owner_desc" type="input" />
+          </el-form-item>
           <el-form-item>
             <el-button type="success" class="fr mt-15" @click="submitSettings">提交</el-button>
           </el-form-item>
@@ -56,6 +59,7 @@ export default {
         site_desc: '',
         site_record: '',
         site_owner: '',
+        site_owner_desc: '',
         site_icon: ''
       },
       settingsRules: {
@@ -76,6 +80,9 @@ export default {
         ],
         site_owner: [
           { required: true, message: '请输入网站所属人', trigger: 'blur' }
+        ],
+        site_owner_desc: [
+          { required: true, message: '请输入', trigger: 'blur' }
         ]
       },
       uploadUrl: '',

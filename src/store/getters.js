@@ -11,6 +11,7 @@ const getters = {
   site_notice: state => state.site.site_notice,
   site_record: state => state.site.site_record,
   site_owner: state => state.site.site_owner,
-  site_icon_url: state => state.site.site_icon_url
+  site_icon_url: state => state.site.site_icon_url,
+  site_owner_desc: state => state.site.site_owner_desc
 }
 export default getters

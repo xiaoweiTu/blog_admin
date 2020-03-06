@@ -7,7 +7,7 @@
         </el-badge>
       </div>
       <div class="article-list">
-        <div v-for="(article, index ) in article_list" :key="index" class="article-item">
+        <div v-for="(article, index ) in article_list" :key="index" class="article-item" @click="lookArticle(article.id)">
           <div class="article-type">
             <el-tag v-if="article.is_recommend === 1" type="warning">{{ article.is_recommend_name }}</el-tag>
             <el-tag v-else type="info">普通</el-tag>
@@ -16,7 +16,7 @@
             {{ article.article_title }}
           </div>
           <div class="article-count">
-            <i class="el-icon-reading" />
+            <i class="el-icon-view" />
             <el-tooltip class="item" effect="dark" content="阅读量" placement="top">
               <span>{{ article.article_count }}</span>
             </el-tooltip>
@@ -39,13 +39,23 @@
     <el-col :span="6" class="index-side">
       <div class="notification box-border">
         <div class="notification-title">
-          实践说
+          公告栏
         </div>
         <div class="notification-content">
           {{ site_notice }}
         </div>
         <div class="notification-foot">
           <el-button style="width: 100%;" @click="leaveWords">留言</el-button>
+        </div>
+      </div>
+      <div class="notification box-border friend-link">
+        <div class="notification-title">
+          友情链接
+        </div>
+        <div class="notification-content">
+          <a v-for="link in links" :key="link.id" :href="link.link" class="links" target="_blank">
+            {{ link.name }}
+          </a>
         </div>
       </div>
     </el-col>
@@ -56,6 +66,7 @@
 import { getHomeTagList } from '../../../api/tag'
 import { getHomeArticleList } from '../../../api/article'
 import { mapGetters } from 'vuex'
+import { getFriendLinks } from "../../../api/site";
 
 export default {
   name: 'Index',
@@ -64,7 +75,19 @@ export default {
       tag_list: [],
       clickNow: 0,
       article_list: [],
-      article_total: 2
+      article_total: 2,
+      links: [
+        {
+          id: 1,
+          name: 'Laravel China 社区 | Laravel China 社区 - 高品质的 Laravel 开发者社区',
+          link: 'https://learnku.com/laravel'
+        },
+        {
+          id: 2,
+          name: 'Laravel社区',
+          link: 'https://learnku.com/laravel'
+        }
+      ]
     }
   },
   computed: {
@@ -74,6 +97,7 @@ export default {
   },
   created() {
     this.getTagList()
+    this.friendLinks()
   },
   methods: {
     changeTag(id) {
@@ -84,6 +108,13 @@ export default {
       const result = await getHomeTagList()
       if (result.code === 1) {
         this.tag_list = result.data
+        if (this.tag_list.length === 0) {
+          this.$message({
+            message: '请先去后台配置标签!',
+            type: 'error'
+          })
+          return
+        }
         const tag_id = this.tag_list[0]['id']
         this.getArticleList(tag_id)
         this.clickNow = tag_id
@@ -114,6 +145,20 @@ export default {
         message: '暂未开放',
         type: 'info'
       })
+    },
+    lookArticle(id) {
+      this.$router.push({ name: 'homeArticle', params: { article_id: id }})
+    },
+    async friendLinks() {
+      const result = await getFriendLinks()
+      if (result.code === 1) {
+        this.links = result.data
+      } else {
+        this.$message({
+          message: result.msg,
+          type: 'error'
+        })
+      }
     }
   }
 }
@@ -179,6 +224,19 @@ export default {
   }
   .index-side {
     padding-left: 30px;
+    padding-bottom: 30px;
+    .friend-link {
+      margin-top: 30px;
+      .links{
+        display: block;
+        padding:10px;
+        color: #909399;
+        border-bottom: 1px solid #f2f2f2;
+      }
+      .links:hover {
+        color: #f56c6c;
+      }
+    }
     .notification{
       background-color: #fff;
       border-radius: 4px;
@@ -198,10 +256,6 @@ export default {
       }
     }
   }
-}
-.box-border {
-  border: 1px solid #e3eaef;
-  box-shadow: 0 1px 2px 0 rgba(101,129,156,.08);
 }
 .cur-point {
   cursor: pointer;

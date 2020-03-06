@@ -4,7 +4,7 @@
     <el-col :span="16">
       <el-row>
         <el-col :span="6">
-          <div class="site-logo">
+          <div class="site-logo" @click="goHome">
             <img :src="site_icon_url" alt="icon" class="site-icon">
             <div class="site-name-box">
               <div class="site-name">{{ site_name }}</div>
@@ -14,7 +14,9 @@
         </el-col>
       </el-row>
     </el-col>
-    <el-col :span="4" />
+    <el-col :span="4" >
+      <el-button v-if="token" @click="goAdmin" class="go-admin">前往控制台</el-button>
+    </el-col>
   </el-row>
 </template>
 
@@ -28,7 +30,8 @@ export default {
       'site_name',
       'site_desc',
       'site_owner',
-      'site_icon_url'
+      'site_icon_url',
+      'token'
     ])
   },
   updated() {
@@ -36,6 +39,14 @@ export default {
     document.getElementById('site-icon').setAttribute('href', this.site_icon_url)
     document.getElementById('site-owner').setAttribute('href', this.site_owner)
     document.getElementById('site-desc').setAttribute('href', this.site_desc)
+  },
+  methods: {
+    goHome() {
+      this.$router.push({ path: '/' })
+    },
+    goAdmin() {
+      this.$router.push({ path: '/admin' })
+    }
   }
 }
 </script>
@@ -59,6 +70,7 @@ export default {
       height: 40px;
       display: inline-block;
       vertical-align: top;
+      cursor: pointer;
     }
     .site-name-box{
       display: inline-block;
@@ -74,6 +86,9 @@ export default {
         font-style: italic;
       }
     }
+  }
+  .go-admin {
+    margin-top: 5px;
   }
 }
 </style>

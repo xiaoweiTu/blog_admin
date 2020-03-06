@@ -6,6 +6,7 @@ const state = {
   site_owner: '',
   site_notice: '',
   site_record: '',
+  site_owner_desc: '',
   site_icon_url: ''
 }
 
@@ -27,6 +28,9 @@ const mutations = {
   },
   set_site_icon_url(state, site_icon_url) {
     state.site_icon_url = site_icon_url
+  },
+  set_site_owner_desc(state, site_owner_desc) {
+    state.site_owner_desc = site_owner_desc
   }
 }
 
@@ -41,6 +45,7 @@ const actions = {
           commit('set_site_notice', data.site_notice)
           commit('set_site_record', data.site_record)
           commit('set_site_icon_url', data.site_icon_url)
+          commit('set_site_owner_desc', data.site_owner_desc)
         }
         resolve()
       }).catch(error => {
