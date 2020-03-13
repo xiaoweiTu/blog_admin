@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function getSettings(params) {
   return request({
-    url: '/api/site/settings',
+    url: '/api/home/site/settings',
     method: 'get',
     params
   })
@@ -10,7 +10,7 @@ export function getSettings(params) {
 
 export function getFriendLinks(params) {
   return request({
-    url: '/api/site/friend_links',
+    url: '/api/home/site/friend_links',
     method: 'get',
     params
   })

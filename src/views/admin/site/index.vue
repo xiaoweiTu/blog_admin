@@ -21,6 +21,7 @@
               :on-exceed="onExceed"
               :on-success="uploadSuccess"
               name="image"
+              :headers="{ Authorization: 'Bearer '+token}"
               :limit="1"
             >
               <i class="el-icon-plus" />
@@ -49,6 +50,7 @@
 
 <script>
 import { getSettings, settingsSave } from '../../../api/site'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'SiteSettings',
@@ -91,6 +93,11 @@ export default {
       uploadedFileList: []
     }
   },
+  computed: {
+    ...mapGetters([
+      'token'
+    ])
+  },
   created() {
     this.uploadUrl = process.env.VUE_APP_BASE_API_UPLOAD
     this.siteSettings()
@@ -108,20 +115,13 @@ export default {
       }
     },
     submitSettings() {
-      this.$refs.settings.validate((valid)=> {
+      this.$refs.settings.validate((valid) => {
         if (valid) {
           settingsSave(this.settings).then((result) => {
-            if (result.code !== 1) {
-              this.$message({
-                message: result.msg,
-                type: 'error'
-              })
-            } else {
-              this.$message({
-                message: result.msg,
-                type: 'success'
-              })
-            }
+            this.$message({
+              message: result.msg,
+              type: result.code !== 1 ? 'error' : 'success'
+            })
           })
         }
       })

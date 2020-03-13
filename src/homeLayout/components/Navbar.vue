@@ -4,18 +4,20 @@
     <el-col :span="16">
       <el-row>
         <el-col :span="6">
-          <div class="site-logo" @click="goHome">
+          <div class="site-logo height-50" @click="goHome">
             <img :src="site_icon_url" alt="icon" class="site-icon">
-            <div class="site-name-box">
-              <div class="site-name">{{ site_name }}</div>
-              <div class="site-desc">{{ site_desc }}----{{ site_owner }}</div>
-            </div>
+            <div class="site-name">{{ site_name }}</div>
           </div>
+        </el-col>
+        <el-col :span="18" class="height-50">
+            <div class="time-line fr" @click="goTimeline">
+              时光机
+            </div>
         </el-col>
       </el-row>
     </el-col>
     <el-col :span="4" >
-      <el-button v-if="token" @click="goAdmin" class="go-admin">前往控制台</el-button>
+      <el-button v-if="token" class="go-admin" @click="goAdmin" >前往控制台</el-button>
     </el-col>
   </el-row>
 </template>
@@ -24,7 +26,12 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Foot',
+  name: 'NavBar',
+  data() {
+    return {
+      series: []
+    }
+  },
   computed: {
     ...mapGetters([
       'site_name',
@@ -46,6 +53,9 @@ export default {
     },
     goAdmin() {
       this.$router.push({ path: '/admin' })
+    },
+    goTimeline() {
+      this.$router.push({ name: 'timeline' })
     }
   }
 }
@@ -62,7 +72,6 @@ export default {
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
   border-radius: 4px;
   .site-logo{
-    height: 50px;
     padding-top: 5px;
     color: #888888;
     .site-icon{
@@ -72,23 +81,39 @@ export default {
       vertical-align: top;
       cursor: pointer;
     }
-    .site-name-box{
-      display: inline-block;
-      height: 40px;
-      position: relative;
       .site-name{
         font-size: 20px;
-        font-style: oblique;
+        display: inline-block;
+        height: 40px;
+        position: relative;
+        line-height: 40px;
       }
       .site-desc{
         font-size: 12px;
         margin-left: 20px;
         font-style: italic;
       }
-    }
   }
   .go-admin {
     margin-top: 5px;
   }
+  .height-50 {
+    height: 50px;
+  }
+}
+
+.time-line {
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  font-size: 14px;
+  color: #777;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0 10px;
+}
+.time-line:hover,.el-dropdown:hover {
+  background-color: rgba(0,0,0,0.1);
+  color: black;
 }
 </style>

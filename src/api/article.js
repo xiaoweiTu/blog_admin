@@ -18,7 +18,31 @@ export function getHomeArticleList(params) {
 
 export function getArticleRow(params) {
   return request({
-    url: '/api/article/row',
+    url: '/api/home/article/row',
+    method: 'get',
+    params
+  })
+}
+
+export function getMostReading(params) {
+  return request({
+    url: '/api/home/article/most_reading',
+    method: 'get',
+    params
+  })
+}
+
+export function getNewestArticle(params) {
+  return request({
+    url: '/api/home/article/the_newest',
+    method: 'get',
+    params
+  })
+}
+
+export function getTimeline(params) {
+  return request({
+    url: '/api/home/timeline',
     method: 'get',
     params
   })

@@ -16,7 +16,7 @@
         </blockquote>
       </div>
     </el-col>
-    <el-col :span="8">
+    <el-col :span="8" class="fixed-window">
       <div class="article-side">
         <div class="site-owner box-border">
             <div class="site-owner-title ">
@@ -31,6 +31,11 @@
             </div>
         </div>
       </div>
+        <div class="article-side most-reading">
+            <div class="box-border">
+                <MostReading></MostReading>
+            </div>
+        </div>
     </el-col>
   </el-row>
 </template>
@@ -39,9 +44,13 @@
 import { getArticleRow } from '../../../api/article'
 import './css/markdown.css'
 import { mapGetters } from 'vuex'
+import MostReading from '../components/most_reading'
 
 export default {
   name: 'Index',
+  components: {
+    MostReading
+  },
   data() {
     return {
       article_id: 0,
@@ -85,6 +94,11 @@ export default {
 
 <style scoped lang="scss">
 .article-container {
+    .fixed-window {
+        width: 22.33333%;
+        position: fixed;
+        right: 17%;
+    }
     .article-row{
         margin-bottom: 60px;
         background-color: #fff;
@@ -99,6 +113,9 @@ export default {
             font-size: 20px;
             font-weight: 400;
         }
+    }
+    .most-reading {
+        margin-top: 30px;
     }
     .article-side{
         padding-left: 30px;

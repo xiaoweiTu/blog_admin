@@ -6,6 +6,7 @@ export default {
   useDefaultHTMLSanitizer: true,
   usageStatistics: false,
   hideModeSwitch: false,
+  codeBlockLanguages: ['PHP'],
   toolbarItems: [
     'heading',
     'bold',
