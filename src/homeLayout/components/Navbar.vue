@@ -6,9 +6,10 @@
       </a>
     </el-col>
     <el-col :span="4">
-      <el-input placeholder="" class="nav-search">
-        <el-button slot="append" icon="el-icon-search"></el-button>
-      </el-input>
+      <div class="search">
+        <input type="text" class="search-input">
+        <i class="el-icon-search search-icon"></i>
+      </div>
       <i class="el-icon-user-solid user-icon"></i>
     </el-col>
   </el-row>
@@ -60,10 +61,26 @@ export default {
   .clicked {
     border-bottom: 2px solid white;
   }
-  .nav-search {
-    margin-top: 10px;
+  .search {
+    display: inline-block;
+    margin-top: 12px;
     width: 65%;
     vertical-align: top;
+    .search-input {
+      background-color: #393737;
+      border: none;
+      border-radius: 10px;
+      height: 26px;
+      width: 96%;
+      outline: none;
+      padding-left: 10px;
+      padding-right: 25px;
+      color: #fff;
+    }
+    .search-icon {
+      margin-left: -25px;
+      cursor: pointer;
+    }
   }
   .user-icon {
     display: inline-block;

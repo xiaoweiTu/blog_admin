@@ -4,9 +4,9 @@
         <div class="poster">
           <div class="icon-name">
             <img src="http://qiniu.txwei.cn/Fut1P7edmWvCqvm5mztihRpOzQzO" alt="" class="icon">
-            <span class="name"></span>
+            <span class="name">{{ site_name }}</span>
           </div>
-          <div class="desc"></div>
+          <div class="desc">{{ site_desc }}</div>
           <div class="tags"></div>
         </div>
     </el-col>
@@ -23,6 +23,8 @@ export default {
   },
   computed: {
     ...mapGetters([
+      'site_name',
+      'site_desc'
     ])
   },
   created() {
@@ -42,17 +44,36 @@ export default {
   position: relative;
   .icon-name {
     position: absolute;
-    top:50px;
+    top:100px;
     left:50%;
-    width: 150px;
-    margin-left: -75px;
+    width: 400px;
+    margin-left: -200px;
+    color: #fff;
     .icon {
-      width: 60px;
-      height: 60px;
+      width: 100px;
+      height: 100px;
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
+      display: inline-block;
+      vertical-align: top;
     }
+    .name {
+      font-size: 60px;
+      display: inline-block;
+      height: 100px;
+      line-height: 100px;
+      margin-left: 35px;
+    }
+  }
+  .desc {
+    position: absolute;
+    bottom: 100px;
+    color: #fff;
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-size: 26px;
   }
 }
 </style>
