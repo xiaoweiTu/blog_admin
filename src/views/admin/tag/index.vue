@@ -4,26 +4,20 @@
       <el-col :span="16">
         <el-form inline :model="searchParams">
           <el-form-item>
-            <el-input v-model="searchParams.tag_name" placeholder="标签名称"></el-input>
+            <el-input v-model="searchParams.name" placeholder="标签名称" />
           </el-form-item>
           <el-form-item>
-            <el-select v-model="searchParams.tag_type" placeholder="请选择标签类型" multiple filterable clearable>
-              <el-option v-for="(typeItem,key) of typeMappings" :key="key" :label="typeItem" :value="key"></el-option>
+            <el-select v-model="searchParams.type" placeholder="请选择标签类型" multiple filterable clearable>
+              <typeComponent></typeComponent>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="searchParams.tag_status" placeholder="请选择状态" multiple filterable clearable>
-              <el-option v-for="(statusItem,key) of statusMappings" :key="key" :label="statusItem" :value="key"></el-option>
+            <el-select v-model="searchParams.status" placeholder="请选择状态" multiple filterable clearable>
+              <statusComponent></statusComponent>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="searchParams.is_series" placeholder="是否系列"  filterable clearable>
-              <el-option label="是" :value="1"></el-option>
-              <el-option label="否" :value="2"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="searchParams.tag_level" placeholder="排序等级"></el-input>
+            <el-input v-model="searchParams.level" placeholder="排序等级" />
           </el-form-item>
         </el-form>
         <el-button type="success" class="mb-20" @click="openTagDrawer({})">新增标签</el-button>
@@ -36,63 +30,52 @@
       <el-col :span="24">
         <el-table :data="tagList" border stripe style="width: 100%">
           <el-table-column
-                  prop="created_at"
-                  label="创建日期"
-                  align="center"
-          >
-          </el-table-column>
+            prop="created_at"
+            label="创建日期"
+            align="center"
+          />
           <el-table-column
-                  prop="tag_name"
-                  label="标签名称"
-                  align="center"
+            prop="name"
+            label="标签名称"
+            align="center"
           >
             <template slot-scope="{row}">
-              <el-tag :type="row.tag_type | statusFilter">{{ row.tag_name }}</el-tag>
+              <el-tag :type="row.status | statusFilter">{{ row.name }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column
-                  prop="status_name"
-                  label="标签状态"
-                  align="center"
+            prop="status_name"
+            label="标签状态"
+            align="center"
           >
             <template slot-scope="{row}">
               <el-tag :type="row.tag_status | statusFilter">{{ row.status_name }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column
-                  prop="tag_type_name"
-                  label="标签类型"
-                  align="center"
+            prop="type"
+            label="标签类型"
+            align="center"
           >
             <template slot-scope="{row}">
-              <el-tag :type="row.tag_type | statusFilter">{{ row.tag_type_name }}</el-tag>
+              <el-tag :type="row.type | statusFilter">{{ row.type_name }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column
-                  prop="is_series_name"
-                  label="是否系列"
-                  align="center"
-          >
-            <template slot-scope="{row}">
-              <el-tag :type="row.is_series | statusFilter">{{ row.is_series_name }}</el-tag>
-            </template>
-          </el-table-column>
+            prop="level"
+            label="标签等级"
+            align="center"
+          />
           <el-table-column
-                  prop="tag_level"
-                  label="标签等级"
-                  align="center"
-          >
-          </el-table-column>
-          <el-table-column
-                  prop=""
-                  label="操作"
-                  align="center"
+            prop=""
+            label="操作"
+            align="center"
           >
             <template slot-scope="{row}">
               <el-button type="success" size="small" @click="openTagDrawer(row)">编辑</el-button>
               <el-popconfirm
-                      title="确定删除吗？"
-                      @onConfirm="deleteTag(row.id)"
+                title="确定删除吗？"
+                @onConfirm="deleteTag(row.id)"
               >
                 <el-button slot="reference" type="danger" size="small">删除</el-button>
               </el-popconfirm>
@@ -100,14 +83,14 @@
           </el-table-column>
         </el-table>
         <el-pagination
-                background
-                class="mt-15 fr"
-                layout="prev, pager, next"
-                :total="total"
-                @current-change="currentChange" >
-        </el-pagination>
+          background
+          class="mt-15 fr"
+          layout="prev, pager, next"
+          :total="total"
+          @current-change="currentChange"
+        />
 
-        <editTag :visible.sync="tagDrawVisible" :tag-data.sync="tagRowData" @fetchData="fetchData"></editTag>
+        <editTag :visible.sync="tagDrawVisible" :tag-data.sync="tagRowData" @fetchData="fetchData" />
       </el-col>
     </el-row>
   </div>
@@ -115,9 +98,9 @@
 
 <script>
 import { getTagList, tagDel } from '../../../api/tag'
-import { getStatusMapping, getTypeMapping } from '../../../api/status'
 import editTag from './components/edit'
-
+import statusComponent from '../components/status'
+import typeComponent from '../components/type'
 export default {
   filters: {
     statusFilter(status) {
@@ -130,7 +113,9 @@ export default {
     }
   },
   components: {
-    editTag
+    editTag,
+    statusComponent,
+    typeComponent
   },
   data() {
     return {
@@ -146,16 +131,13 @@ export default {
         is_series: ''
       },
       tagList: [],
-      typeMappings: [],
-      statusMappings: [],
       total: 0,
-      tagRowData: {}
+      tagRowData: {},
+      typeMappingList: {}
     }
   },
   created() {
     this.fetchData()
-    this.typeMapping()
-    this.statusMapping()
   },
   methods: {
     // 获取列表
@@ -176,7 +158,7 @@ export default {
     },
     // 删除
     async deleteTag(id) {
-      const res = await tagDel({ tag_id: id })
+      const res = await tagDel({ id: id })
       if (res.code === 1) {
         this.$message({
           message: res.msg,
@@ -189,36 +171,6 @@ export default {
     currentChange(page) {
       this.searchParams.page = page
       this.fetchData()
-    },
-    // 类型映射
-    typeMapping() {
-      try {
-        getTypeMapping().then(({ code, data }) => {
-          if (code === 1) {
-            this.typeMappings = data
-          }
-        })
-      } catch (e) {
-        this.$message({
-          message: e.message,
-          type: 'error'
-        })
-      }
-    },
-    // 状态映射
-    statusMapping() {
-      try {
-        getStatusMapping().then(({ code, data }) => {
-          if (code === 1) {
-            this.statusMappings = data
-          }
-        })
-      } catch (e) {
-        this.$message({
-          message: e.message,
-          type: 'error'
-        })
-      }
     },
     // 打开编辑抽屉
     openTagDrawer(tagRow) {

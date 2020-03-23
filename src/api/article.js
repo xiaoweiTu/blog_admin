@@ -2,15 +2,7 @@ import request from '@/utils/request'
 
 export function getArticleList(params) {
   return request({
-    url: '/api/article/list',
-    method: 'get',
-    params
-  })
-}
-
-export function getHomeArticleList(params) {
-  return request({
-    url: '/api/home/article',
+    url: '/article/pagination',
     method: 'get',
     params
   })
@@ -18,56 +10,23 @@ export function getHomeArticleList(params) {
 
 export function getArticleRow(params) {
   return request({
-    url: '/api/home/article/row',
+    url: '/article/row',
     method: 'get',
     params
-  })
-}
-
-export function getMostReading(params) {
-  return request({
-    url: '/api/home/article/most_reading',
-    method: 'get',
-    params
-  })
-}
-
-export function getNewestArticle(params) {
-  return request({
-    url: '/api/home/article/the_newest',
-    method: 'get',
-    params
-  })
-}
-
-export function getTimeline(params) {
-  return request({
-    url: '/api/home/timeline',
-    method: 'get',
-    params
-  })
-}
-
-export function getTags() {
-  return request({
-    url: '/api/tag/tags',
-    method: 'get'
   })
 }
 
 export function articleSave(data) {
   return request({
-    url: '/api/article/save',
+    url: '/article/save',
     method: 'post',
     data
   })
 }
 
-
-
 export function articleDel(data) {
   return request({
-    url: '/api/article/delete',
+    url: '/article/delete',
     method: 'post',
     data
   })

@@ -41,9 +41,9 @@ const actions = {
         const { code, data } = response
         if (code === 1) {
           commit('SET_TOKEN', data.token)
-          commit('SET_NAME', data.admin.name)
-          commit('SET_EMAIL', data.admin.email)
-          commit('SET_ID', data.admin.id)
+          commit('SET_NAME', data.user.name)
+          commit('SET_EMAIL', data.user.email)
+          commit('SET_ID', data.user.id)
           setToken(data.token)
         }
         resolve()

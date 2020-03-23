@@ -1,48 +1,47 @@
 <template>
-    <el-drawer
-            :title="title"
-            :visible.sync="visible"
-            :before-close="leave"
-            direction="rtl"
-    >
-        <div class="tag-box">
-            <el-form :model="tagData">
-                <el-form-item label="标签名称" prop="tag_name" >
-                    <el-input v-model="tagData.tag_name" class="tag-input"></el-input>
-                </el-form-item>
-                <el-form-item label="标签类型" prop="tag_type">
-                    <el-select v-model="tagData.tag_type" placeholder="请选择标签类型">
-                        <el-option v-for="(typeItem,key) of typeMappings" :key="key"  :label="typeItem" :value="Number(key)"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="标签状态" prop="tag_status">
-                    <el-select v-model="tagData.tag_status" placeholder="请选择状态">
-                        <el-option v-for="(statusItem,key) of statusMappings" :key="key" :label="statusItem" :value="Number(key)"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="是否系列" prop="is_series">
-                    <el-select v-model="tagData.is_series" placeholder="请选择状态">
-                        <el-option  label="是" :value="1"></el-option>
-                        <el-option  label="否" :value="2"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="标签排序" prop="tag_level">
-                    <el-input v-model="tagData.tag_level" type="number" min="1" max="128" class="tag-input" placeholder="请选择排序等级"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="success" @click="submit">提交</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
-    </el-drawer>
+  <el-drawer
+    :title="title"
+    :visible.sync="visible"
+    :before-close="leave"
+    direction="rtl"
+  >
+    <div class="tag-box">
+      <el-form :model="tagData">
+        <el-form-item label="标签名称" prop="name">
+          <el-input v-model="tagData.name" class="tag-input" />
+        </el-form-item>
+        <el-form-item label="标签类型" prop="type">
+          <el-select v-model="tagData.type" placeholder="请选择标签类型">
+            <typeComponent />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="标签状态" prop="status">
+          <el-select v-model="tagData.status" placeholder="请选择状态">
+            <statusComponent />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="标签排序" prop="level">
+          <el-input v-model="tagData.level" type="number" min="1" max="128" class="tag-input" placeholder="请选择排序等级" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="success" @click="submit">提交</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+  </el-drawer>
 </template>
 
 <script>
-import { getTypeMapping, getStatusMapping } from '../../../../api/status'
 import { tagSave } from '../../../../api/tag'
+import statusComponent from '../../components/status'
+import typeComponent from '../../components/type'
 
 export default {
   name: 'EditTag',
+  components: {
+    statusComponent,
+    typeComponent
+  },
   props: {
     visible: {
       type: Boolean,
@@ -50,10 +49,9 @@ export default {
     },
     tagData: [Object]
   },
+
   data() {
     return {
-      typeMappings: [],
-      statusMappings: []
     }
   },
   computed: {
@@ -62,26 +60,10 @@ export default {
     }
   },
   created() {
-    this.typeMapping()
-    this.statsMapping()
   },
   methods: {
-    typeMapping() {
-      getTypeMapping().then(({ code, data }) => {
-        if (code === 1) {
-          this.typeMappings = data
-        }
-      })
-    },
-    statsMapping() {
-      getStatusMapping().then(({ code, data }) => {
-        if (code === 1) {
-          this.statusMappings = data
-        }
-      })
-    },
     async submit() {
-      if (this.tagData.tag_name === undefined) {
+      if (this.tagData.name === undefined) {
         this.$message({
           message: '标签名称不能为空!',
           type: 'error'

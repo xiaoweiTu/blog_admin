@@ -1,16 +1,17 @@
 import request from '@/utils/request'
 
-export function getTypeMapping() {
+export function getStatus(params) {
   return request({
-    url: '/api/status/type_mapping',
-    method: 'get'
+    url: '/web/status',
+    method: 'get',
+    params
   })
 }
 
-export function getStatusMapping() {
+export function getType(params) {
   return request({
-    url: '/api/status/status_mapping',
-    method: 'get'
+    url: '/web/type',
+    method: 'get',
+    params
   })
 }
-

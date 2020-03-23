@@ -124,27 +124,6 @@ export const constantRoutes = [
       }
     ]
   },
-  // 站点设置
-  {
-    path: '/admin/settings',
-    component: Layout,
-    meta: { title: '站点管理', icon: 'table' },
-    redirect: '/admin/site/settings',
-    children: [
-      {
-        path: '/admin/site/settings',
-        name: 'SiteSettings',
-        component: () => import('@/views/admin/site/index'),
-        meta: { title: '站点设置', icon: 'table' }
-      },
-      {
-        path: '/admin/site/friend_link',
-        name: 'friendLink',
-        component: () => import('@/views/admin/site/friend_link'),
-        meta: { title: '友情链接', icon: 'link' }
-      }
-    ]
-  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
