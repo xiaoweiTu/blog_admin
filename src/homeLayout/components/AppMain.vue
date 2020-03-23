@@ -1,9 +1,9 @@
 <template>
   <el-row class="app-main">
-    <el-col :span="4">
+    <el-col :span="5">
       &nbsp;
     </el-col>
-    <el-col :span="16">
+    <el-col :span="13">
       <transition name="fade-transform" mode="out-in">
         <router-view :key="key" />
       </transition>
@@ -29,6 +29,7 @@ export default {
   width: 100%;
   position: relative;
   overflow: hidden;
+  padding-top: 20px;
 }
 .fixed-header+.app-main {
   padding-top: 50px;

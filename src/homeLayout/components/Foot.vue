@@ -5,7 +5,7 @@
     </el-col>
     <el-col :span="16">
       <div class="site-record">
-        {{ site_record }}
+        Copy Right @ 2018-2020 {{ site_record }} design by 小圆圆伍
       </div>
     </el-col>
   </el-row>
@@ -25,11 +25,11 @@ export default {
 
 <style scoped lang="scss">
 .foot-container {
-  background-color: #36292F;
+  background-color: #000;
   height: 60px;
   border-radius: 4px;
   .site-record{
-    color: #bfcbd9;
+    color: #fff;
     font-size: 12px;
     text-align: center;
     margin-top: 25px;

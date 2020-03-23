@@ -1,23 +1,15 @@
 <template>
   <el-row class="navbar">
-    <el-col :span="4">&nbsp;</el-col>
-    <el-col :span="16">
-      <el-row>
-        <el-col :span="6">
-          <div class="site-logo height-50" @click="goHome">
-            <img :src="site_icon_url" alt="icon" class="site-icon">
-            <div class="site-name">{{ site_name }}</div>
-          </div>
-        </el-col>
-        <el-col :span="18" class="height-50">
-            <div class="time-line fr" @click="goTimeline">
-              时光机
-            </div>
-        </el-col>
-      </el-row>
+    <el-col :span="12" :offset="4">
+      <a class="nav-item clicked" href="/">
+        <span>首页</span>
+      </a>
     </el-col>
-    <el-col :span="4" >
-      <el-button v-if="token" class="go-admin" @click="goAdmin" >前往控制台</el-button>
+    <el-col :span="4">
+      <el-input placeholder="" class="nav-search">
+        <el-button slot="append" icon="el-icon-search"></el-button>
+      </el-input>
+      <i class="el-icon-user-solid user-icon"></i>
     </el-col>
   </el-row>
 </template>
@@ -36,27 +28,19 @@ export default {
     ...mapGetters([
       'site_name',
       'site_desc',
-      'site_owner',
-      'site_icon_url',
-      'token'
+      'site_author',
+      'site_keyword',
+      'site_icon_url'
     ])
   },
   updated() {
     document.title = this.site_name
     document.getElementById('site-icon').setAttribute('href', this.site_icon_url)
-    document.getElementById('site-owner').setAttribute('href', this.site_owner)
-    document.getElementById('site-desc').setAttribute('href', this.site_desc)
+    document.getElementById('site-author').content = this.site_owner
+    document.getElementById('site-desc').content = this.site_desc
+    document.getElementById('site-keywords').content = this.site_keyword
   },
   methods: {
-    goHome() {
-      this.$router.push({ path: '/' })
-    },
-    goAdmin() {
-      this.$router.push({ path: '/admin' })
-    },
-    goTimeline() {
-      this.$router.push({ name: 'timeline' })
-    }
   }
 }
 </script>
@@ -64,56 +48,28 @@ export default {
 <style lang="scss" scoped>
 .navbar {
   height: 50px;
-  overflow: hidden;
-  margin-bottom: 40px;
-  width: 100%;
-  position: relative;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
-  border-radius: 4px;
-  .site-logo{
-    padding-top: 5px;
-    color: #888888;
-    .site-icon{
-      width: 40px;
-      height: 40px;
-      display: inline-block;
-      vertical-align: top;
-      cursor: pointer;
-    }
-      .site-name{
-        font-size: 20px;
-        display: inline-block;
-        height: 40px;
-        position: relative;
-        line-height: 40px;
-      }
-      .site-desc{
-        font-size: 12px;
-        margin-left: 20px;
-        font-style: italic;
-      }
-  }
-  .go-admin {
+  background-color: #000;
+  color: #fff;
+  font-size: 16px;
+  .nav-item {
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
     margin-top: 5px;
   }
-  .height-50 {
-    height: 50px;
+  .clicked {
+    border-bottom: 2px solid white;
   }
-}
-
-.time-line {
-  display: inline-block;
-  height: 50px;
-  line-height: 50px;
-  font-size: 14px;
-  color: #777;
-  font-weight: 400;
-  cursor: pointer;
-  padding: 0 10px;
-}
-.time-line:hover,.el-dropdown:hover {
-  background-color: rgba(0,0,0,0.1);
-  color: black;
+  .nav-search {
+    margin-top: 10px;
+    width: 65%;
+    vertical-align: top;
+  }
+  .user-icon {
+    display: inline-block;
+    height: 30px;
+    margin-top: 10px;
+    font-size: 26px;
+  }
 }
 </style>

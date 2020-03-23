@@ -87,3 +87,17 @@ div:focus {
   border: 1px solid #e3eaef;
   box-shadow: 0 1px 2px 0 rgba(101,129,156,.08);
 }
+.el-input__inner{
+  height: 30px;
+  border-radius: 5px;
+  background-color: #393737;
+}
+.el-input-group__append .el-button {
+  width: 15px;
+  padding: 0;
+  margin: 0;
+  margin-left: -2px;
+}
+.el-input-group__append, .el-input-group__prepend {
+  padding: 0 5px;
+}

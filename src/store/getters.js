@@ -8,10 +8,9 @@ const getters = {
   email: state => state.user.email,
   site_name: state => state.site.site_name,
   site_desc: state => state.site.site_desc,
-  site_notice: state => state.site.site_notice,
+  site_keyword: state => state.site.site_keyword,
   site_record: state => state.site.site_record,
-  site_owner: state => state.site.site_owner,
-  site_icon_url: state => state.site.site_icon_url,
-  site_owner_desc: state => state.site.site_owner_desc
+  site_author: state => state.site.site_author,
+  site_icon_url: state => state.site.site_icon_url
 }
 export default getters
