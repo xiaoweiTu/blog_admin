@@ -37,7 +37,7 @@ export default {
 <style scoped lang="scss">
 .poster {
   background-color: #000;
-  height: 400px;
+  height: 350px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -68,12 +68,17 @@ export default {
   }
   .desc {
     position: absolute;
-    bottom: 100px;
+    bottom: 80px;
     color: #fff;
     display: block;
     text-align: center;
     width: 100%;
     font-size: 26px;
+  }
+  .tags {
+    width: 400px;
+    height: 50px;
+    background-color: #fff;
   }
 }
 </style>
