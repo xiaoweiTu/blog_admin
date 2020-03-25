@@ -1,11 +1,11 @@
 <template>
   <el-row class="navbar">
-    <el-col :span="12" :offset="4">
+    <el-col :span="11" :offset="5">
       <a class="nav-item clicked" href="/">
         <span>首页</span>
       </a>
     </el-col>
-    <el-col :span="4">
+    <el-col :span="3">
       <div class="search">
         <input type="text" class="search-input">
         <i class="el-icon-search search-icon"></i>
@@ -64,7 +64,7 @@ export default {
   .search {
     display: inline-block;
     margin-top: 12px;
-    width: 65%;
+    width: 86%;
     vertical-align: top;
     .search-input {
       background-color: #393737;
@@ -87,6 +87,26 @@ export default {
     height: 30px;
     margin-top: 10px;
     font-size: 26px;
+  }
+}
+@media only screen and (min-width: 1100px) {
+  .navbar .search {
+    width: 80%;
+  }
+}
+@media only screen and (min-width: 1300px) {
+  .navbar .search {
+    width: 81%;
+  }
+}
+@media only screen and (min-width: 1600px)  {
+  .navbar .search {
+    width: 84%;
+  }
+}
+@media only screen and (min-width: 1900px)  {
+  .navbar .search {
+    width: 86%;
   }
 }
 </style>

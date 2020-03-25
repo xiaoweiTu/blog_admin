@@ -7,7 +7,44 @@
             <span class="name">{{ site_name }}</span>
           </div>
           <div class="desc">{{ site_desc }}</div>
-          <div class="tags"></div>
+          <div class="tags">
+            <span class="tag-item">
+              Laravel
+            </span>
+            <span class="tag-item">
+              Laravel
+            </span>
+            <span class="tag-item">
+              Laravel
+            </span>
+            <span class="tag-item">
+              Laravel
+            </span>
+            <span class="tag-item">
+              Laravel
+            </span>
+          </div>
+        </div>
+        <div class="content">
+            <div class="item">
+              <img src="http://qiniu.txwei.cn/Fut1P7edmWvCqvm5mztihRpOzQzO" alt="" class="item-icon">
+              <div class="item-content">
+                <p class="title">
+                  <i class="el-icon-star-on"></i>
+                  如何如何如何如何如何如何如何如何如何如何
+                </p>
+                <p class="desc">
+                  如何如何如何如何如何如何如何如何如何如何
+                </p>
+                <p>
+                  <span>10秒前</span>
+                  <span>
+                    <i class="el-icon-view"></i>
+                    <span>50</span>
+                  </span>
+                </p>
+              </div>
+            </div>
         </div>
     </el-col>
   </el-row>
@@ -38,9 +75,7 @@ export default {
 .poster {
   background-color: #000;
   height: 350px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
+  border-radius: 5px;
   position: relative;
   .icon-name {
     position: absolute;
@@ -78,7 +113,36 @@ export default {
   .tags {
     width: 400px;
     height: 50px;
+    padding: 0 55px;
     background-color: #fff;
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    margin-left: -200px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    .tag-item {
+      display: inline-block;
+      line-height: 50px;
+    }
   }
 }
+.content {
+  height: 600px;
+  background-color: #fff;
+  margin-top: 50px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  .item-icon {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+  }
+  .item-content {
+    display: inline-block;
+  }
+}
+
 </style>
