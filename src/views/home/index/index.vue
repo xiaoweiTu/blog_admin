@@ -8,21 +8,10 @@
           </div>
           <div class="desc">{{ site_desc }}</div>
           <div class="tags">
-            <span class="tag-item">
-              Laravel
-            </span>
-            <span class="tag-item">
-              Laravel
-            </span>
-            <span class="tag-item">
-              Laravel
-            </span>
-            <span class="tag-item">
-              Laravel
-            </span>
-            <span class="tag-item">
-              Laravel
-            </span>
+              <el-tooltip class="tag-item tag-active" effect="dark" content="LaravelLaravelLaravelLaravelLaravel" placement="top">
+                <el-button>LaravelLaravelLaravelLaravelLaravel</el-button>
+              </el-tooltip>
+            <i class="el-icon-caret-bottom more-tags"></i>
           </div>
         </div>
         <div class="content">
@@ -112,6 +101,7 @@ export default {
   }
   .tags {
     width: 400px;
+    overflow: hidden;
     height: 50px;
     padding: 0 55px;
     background-color: #fff;
@@ -125,6 +115,19 @@ export default {
     .tag-item {
       display: inline-block;
       line-height: 50px;
+      padding:0 5px;
+      width: 90px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .more-tags {
+      display: inline-block;
+      position: absolute;
+      right: 10px;
+      top: 15px;
+      font-size: 20px;
+      cursor: pointer;
     }
   }
 }

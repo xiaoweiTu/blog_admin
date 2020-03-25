@@ -101,3 +101,12 @@ div:focus {
 .el-input-group__append, .el-input-group__prepend {
   padding: 0 5px;
 }
+
+.tags .el-button {
+  border:none;
+}
+.tags .el-button:focus,.tags .el-button:hover, .tags .tag-active {
+  color: #fff;
+  background-color: rgba(0,0,0,0.7);
+  border-radius: 50px;
+}
