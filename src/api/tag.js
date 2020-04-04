@@ -16,6 +16,14 @@ export function getHomeTagList(params) {
   })
 }
 
+export function getAllTags(params) {
+  return request({
+    url: '/tag/all',
+    method: 'get',
+    params
+  })
+}
+
 export function tagSave(data) {
   return request({
     url: '/tag/save',

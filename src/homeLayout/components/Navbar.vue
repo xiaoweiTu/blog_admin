@@ -7,7 +7,7 @@
     </el-col>
     <el-col :span="3">
       <div class="search">
-        <input type="text" class="search-input">
+        <input type="text" placeholder="搜索" class="search-input">
         <i class="el-icon-search search-icon"></i>
       </div>
       <i class="el-icon-user-solid user-icon"></i>
@@ -47,6 +47,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  a {
+    color: #fff;
+  }
 .navbar {
   height: 50px;
   background-color: #000;
@@ -76,6 +79,7 @@ export default {
       padding-left: 10px;
       padding-right: 25px;
       color: #fff;
+      font-size: 12px;
     }
     .search-icon {
       margin-left: -25px;

@@ -1,91 +1,80 @@
 <template>
   <el-row class="article-container">
-    <el-col :span="16">
-      <div class="article-row box-border">
-        <h1 class="article-title">{{ article.article_title }}</h1>
-        <p class="article-info">
-          <el-tag v-if="article.is_recommend === 1" type="success">{{ article.is_recommend_name }}</el-tag>
-          <el-tag type="info">{{ article.tag.tag_name }}</el-tag>
-          <el-tag type="danger"><i class="el-icon-view">&nbsp;{{ article.article_count }}</i></el-tag>
-          <el-tag type="warning"><i class="el-icon-edit-outline">&nbsp;{{ article.created_at }}</i></el-tag>
-        </p>
-        <hr style="color: #777;font-weight: 400;border-bottom: 1px solid rgba(211,224,233,.15);height: 0;">
-        <div class="article-content" v-html="article.article_content" />
+    <el-col :span="24">
+      <header v-if="articleRow" class="info-box">
+        <div class="left">
+          <img src="http://qiniu.txwei.cn/Fut1P7edmWvCqvm5mztihRpOzQzO" alt="" class="el-avatar">
+          <div class="name">
+            <p class="auth-name">小圆圆伍</p>
+            <p class="who">站长/PHP</p>
+          </div>
+          <el-button class="msg">私信</el-button>
+        </div>
+        <div class="right">
+          <div class="time">
+            发布于 {{ articleRow.minus_time }}
+          </div>
+          <div class="info">
+            <span class="reading">
+              <i class="el-icon-view">&nbsp;&nbsp;{{ articleRow.clicked }}</i>
+            </span>
+            <span class="talks">
+              <i class="el-icon-chat-dot-round">&nbsp;&nbsp;154</i>
+            </span>
+            <span class="likes">
+              <i class="el-icon-star-off">&nbsp;&nbsp;{{ articleRow.likes }}</i>
+            </span>
+          </div>
+        </div>
+      </header>
+      <div class="content">
+        <div class="content-html" v-html="articleRow.content" />
         <blockquote style="font-size: 0.9em;">
           本作品采用<a href="https://learnku.com/docs/guide/cc4.0/6589">《CC 协议》</a>，转载必须注明作者和本文链接
         </blockquote>
-      </div>
-    </el-col>
-    <el-col :span="8" class="fixed-window">
-      <div class="article-side">
-        <div class="site-owner box-border">
-            <div class="site-owner-title ">
-                <div class="site-owner-info">
-                    <p class="site-owner-name"> <i class="el-icon-edit-outline"></i>&nbsp;{{ site_owner }}</p>
-                    <p class="site-owner-desc"> {{ site_desc }}</p>
-                </div>
-                <img :src="site_icon_url" alt="icon" class="site-icon-url">
-            </div>
-            <div class="site-owner-saying">
-                {{ site_owner_desc }}
-            </div>
+        <div class="like">
+          <i class="el-icon-star-off" />
+          <p>赞</p>
         </div>
       </div>
-        <div class="article-side most-reading">
-            <div class="box-border">
-                <MostReading></MostReading>
-            </div>
-        </div>
+      <div class="footer">
+        <!--        <Talk class="talk"></Talk>-->
+      </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
 import { getArticleRow } from '../../../api/article'
+// import Talk from '../components/talks'
 import './css/markdown.css'
-import { mapGetters } from 'vuex'
-import MostReading from '../components/most_reading'
 
 export default {
   name: 'Index',
   components: {
-    MostReading
+    // Talk
   },
   data() {
     return {
-      article_id: 0,
-      article: {
-        tag: {
-          tag_name: ''
-        }
-      }
+      articleId: 0,
+      articleRow: {}
     }
   },
-  computed: {
-    ...mapGetters([
-      'site_owner',
-      'site_desc',
-      'site_icon_url',
-      'site_owner_desc'
-    ])
-  },
   created() {
-    this.article_id = this.$route.params.article_id
-    this.getArticle()
+    this.articleId = this.$route.params.article_id
+    if (this.articleId === undefined) {
+      this.$message({
+        message: '无ID',
+        type: 'error'
+      })
+    }
+    this.article()
   },
   methods: {
-    async getArticle() {
-      if (this.article_id === 0 || this.article_id === undefined) {
-        this.$router.push({ name: 'home' })
-      }
-      const result = await getArticleRow({ article_id: this.article_id })
-      if (result.code === 1) {
-        this.article = result.data
-      } else {
-        this.$message({
-          message: result.msg,
-          type: 'danger'
-        })
+    async article() {
+      const res = await getArticleRow({ id: this.articleId })
+      if (res.code === 1) {
+        this.articleRow = res.data
       }
     }
   }
@@ -94,65 +83,114 @@ export default {
 
 <style scoped lang="scss">
 .article-container {
-    .fixed-window {
-        width: 22.33333%;
-        position: fixed;
-        right: 17%;
-    }
-    .article-row{
-        margin-bottom: 60px;
-        background-color: #fff;
-        border-radius: 4px;
-        padding: 20px;
-        .article-title{
-            margin-top: 0;
-            border: none;
-            padding: 0;
-            margin-bottom: 15px;
-            color: #636b6f;
-            font-size: 20px;
-            font-weight: 400;
-        }
-    }
-    .most-reading {
-        margin-top: 30px;
-    }
-    .article-side{
-        padding-left: 30px;
-        .site-owner{
-            background-color: #fff;
-            position: relative;
-            padding: 15px;
-            -webkit-border-radius: 4px;
-            -moz-border-radius: 4px;
-            border-radius: 4px;
-        }
-        .site-owner-title{
-            border-bottom: 1px solid rgba(211, 224, 233, 0.3);
-            padding-bottom: 10px;
-            .site-owner-info,.site-icon-url{
+    background-color: #fff;
+    .info-box {
+        height: 140px;
+        border-top: 1px solid #E0EEEE;
+        border-bottom: 1px solid #E0EEEE;
+        .left {
+            height: 140px;
+            width: 30%;
+            overflow: hidden;
+            padding: 20px;
+            border-right:1px solid #E0EEEE;
+            display: inline-block;
+            /deep/ .el-avatar {
+                width: 100px;
+                height: 100px;
                 display: inline-block;
+                vertical-align: middle;
             }
-            .site-owner-info{
-                height: 60px;
-                .site-owner-name {
-                    font-weight: bold;
-                    font-size: 15px;
+            .name {
+                display: inline-block;
+                vertical-align: middle;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                margin-top: 15px;
+                margin-left: 15px;
+                .auth-name {
+                    font-weight: 700;
+                    font-size: 16px;
                 }
-                .site-owner-desc {
-                    font-size: 12px;
-                    color: rgba(0,0,0,.4);
+                .who {
+                    font-size: 14px;
+                    color: #a2a2a2;
                 }
             }
-            .site-icon-url{
-                width: 60px;
-                height: 60px;
-                float: right;
+            .msg {
+                vertical-align: middle;
+                padding: 6px 8px;
+                margin-left: 20px;
             }
         }
-        .site-owner-saying{
-            padding-top: 20px;
+        .right {
+            display: inline-block;
+            vertical-align: top;
+            height: 140px;
+            line-height: 140px;
+            width: 69%;
+            .time {
+                width: 60%;
+                text-align: center;
+                font-size: 14px;
+                display: inline-block;
+                vertical-align: top;
+            }
+            .info {
+                display: inline-block;
+                width: 35%;
+                text-align: center;
+                font-size: 14px;
+                vertical-align: top;
+                .reading,.talks, .likes {
+                    margin-left: 35px;
+                }
+            }
         }
     }
+    .content {
+        padding:35px;
+        border-bottom:1px solid #E0EEEE;
+      .like {
+        font-size: 36px;
+        padding-top: 35px;
+        text-align: center;
+      }
+    }
+  .footer {
+    padding: 20px;
+    margin-top: 50px;
+    .talks {
+
+    }
+  }
 }
+
+    @media only screen and (min-width: 1600px) {
+     .article-container {
+         .info-box {
+            .left {
+                /deep/ .el-avatar {
+                    width: 90px;
+                    height: 90px;
+                }
+                .name {
+                    margin-left: 10px;
+                }
+                .msg {
+                    padding: 6px 8px;
+                    margin-left: 20px;
+                }
+            }
+             .right {
+                 .info {
+                     .reading,.talks, .likes {
+                         margin-left: 20px;
+                     }
+                 }
+             }
+         }
+     }
+    }
 </style>

@@ -20,8 +20,8 @@
             <el-input v-model="searchParams.title" type="text" placeholder="文章标题" />
           </el-form-item>
           <el-form-item>
-            <el-select v-model="searchParams.tag_id" multiple filterable clearable placeholder="标签">
-              <el-option v-for="(item) in tagList" :key="item.id" :label="item.tag_name" :value="item.id">
+            <el-select v-model="searchParams.tag_id" multiple  clearable placeholder="标签">
+              <el-option v-for="(item) in tagList" :key="item.id" :label="item.name" :value="Number(item.id)">
                 <span style="float: left">{{ item.name }}</span>
                 <span style="float: right; color: #8492a6; font-size: 13px">{{ item.type_name }} ({{ item.status_name }})</span>
               </el-option>
@@ -118,7 +118,7 @@
 
 <script>
 import { getArticleList, articleDel } from '../../../api/article'
-import { getHomeTagList } from '../../../api/tag'
+import { getAllTags } from '../../../api/tag'
 
 export default {
   filters: {
@@ -134,11 +134,10 @@ export default {
   data() {
     return {
       searchParams: {
-        article_title: '',
+        title: '',
         tag_id: [],
-        article_type: [],
-        article_status: [],
-        is_recommend: '',
+        type: [],
+        status: [],
         page: 1
       },
       typeMappings: [],
@@ -155,7 +154,7 @@ export default {
   },
   methods: {
     async tags() {
-      const res = await getHomeTagList()
+      const res = await getAllTags()
       if (res.code === 1) {
         this.tagList = res.data
       }

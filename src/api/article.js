@@ -8,6 +8,14 @@ export function getArticleList(params) {
   })
 }
 
+export function getHomeArticleList(params) {
+  return request({
+    url: '/article/list',
+    method: 'get',
+    params
+  })
+}
+
 export function getArticleRow(params) {
   return request({
     url: '/article/row',

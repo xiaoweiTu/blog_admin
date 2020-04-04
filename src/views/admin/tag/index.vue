@@ -124,11 +124,10 @@ export default {
       tagDrawVisible: false,
       searchParams: {
         page: 1,
-        tag_type: [],
-        tag_name: '',
-        tag_status: [],
-        tag_level: '',
-        is_series: ''
+        type: [],
+        name: '',
+        status: [],
+        level: ''
       },
       tagList: [],
       total: 0,

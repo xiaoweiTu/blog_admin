@@ -1,51 +1,65 @@
 <template>
   <el-row class="index-container">
     <el-col :span="24">
-        <div class="poster">
-          <div class="icon-name">
-            <img src="http://qiniu.txwei.cn/Fut1P7edmWvCqvm5mztihRpOzQzO" alt="" class="icon">
-            <span class="name">{{ site_name }}</span>
-          </div>
-          <div class="desc">{{ site_desc }}</div>
-          <div class="tags">
-              <el-tooltip class="tag-item tag-active" effect="dark" content="LaravelLaravelLaravelLaravelLaravel" placement="top">
-                <el-button>LaravelLaravelLaravelLaravelLaravel</el-button>
-              </el-tooltip>
-            <i class="el-icon-caret-bottom more-tags"></i>
+      <div class="poster">
+        <div class="icon-name">
+          <img src="http://qiniu.txwei.cn/Fut1P7edmWvCqvm5mztihRpOzQzO" alt="" class="icon">
+          <span class="name">{{ site_name }}</span>
+        </div>
+        <div class="desc">{{ site_desc }}</div>
+        <div class="tags">
+          <el-tooltip v-for="(item, index) in tags" :key="index" :class=" curClicked === index ? 'tag-active' : '' " class="tag-item" effect="dark" content="LaravelLaravelLaravelLaravelLaravel" placement="top">
+            <el-button @click="getTagArticles(index, item.id)">{{ item.name }}</el-button>
+          </el-tooltip>
+          <i v-if="tags.length > 2" class="el-icon-caret-bottom more-tags" @click="moreTags" />
+        </div>
+      </div>
+      <div class="content">
+        <div v-for="(item, index) in articles" :key="index" class="item" @click="goRead(item.id)">
+          <img :src="item.icon" alt="" class="item-icon">
+          <div class="item-content">
+            <p class="title">
+              <i class="el-icon-star-on" />
+              {{ item.title }}
+            </p>
+            <p class="desc">
+              {{ item.description }}
+            </p>
+            <p class="info">
+              <span><i class="el-icon-time" /><span class="time">{{ item.minus_time }}</span></span>
+              <span class="read">
+                <i class="el-icon-view" />
+                <span class="readings">{{ item.clicked }}</span>
+              </span>
+            </p>
           </div>
         </div>
-        <div class="content">
-            <div class="item">
-              <img src="http://qiniu.txwei.cn/Fut1P7edmWvCqvm5mztihRpOzQzO" alt="" class="item-icon">
-              <div class="item-content">
-                <p class="title">
-                  <i class="el-icon-star-on"></i>
-                  如何如何如何如何如何如何如何如何如何如何
-                </p>
-                <p class="desc">
-                  如何如何如何如何如何如何如何如何如何如何
-                </p>
-                <p>
-                  <span>10秒前</span>
-                  <span>
-                    <i class="el-icon-view"></i>
-                    <span>50</span>
-                  </span>
-                </p>
-              </div>
-            </div>
+        <div v-if="page < totalPage" class="load-more">
+          <el-button v-loading="loading" @click="loadMore">加载更多...</el-button>
         </div>
+      </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { getHomeTagList } from '../../../api/tag'
+import { getHomeArticleList } from '../../../api/article'
 
 export default {
   name: 'Index',
   data() {
-    return {}
+    return {
+      showMore: false,
+      tags: [],
+      curClicked: '',
+      tagId: 0,
+      articles: [],
+      page: 1,
+      totalPage: 1,
+      loading: false
+    }
   },
   computed: {
     ...mapGetters([
@@ -54,8 +68,59 @@ export default {
     ])
   },
   created() {
+    this.tagList()
+    this.tagArticles()
   },
   methods: {
+    moreTags() {
+      this.showMore = !this.showMore
+      if (this.showMore) {
+        const tag = document.querySelector('.tags')
+        tag.style.height = 'auto'
+        const height = tag.clientHeight + 6
+        document.querySelector('.content').style.marginTop = height + 'px'
+        document.querySelector('.more-tags').classList.remove('el-icon-caret-bottom')
+        document.querySelector('.more-tags').classList.add('el-icon-caret-left')
+      } else {
+        document.querySelector('.tags').style.height = 50 + 'px'
+        document.querySelector('.content').style.marginTop = 50 + 'px'
+        document.querySelector('.more-tags').classList.remove('el-icon-caret-left')
+        document.querySelector('.more-tags').classList.add('el-icon-caret-bottom')
+      }
+    },
+    async tagList() {
+      const res = await getHomeTagList()
+      if (res.code === 1) {
+        this.tags = res.data
+      }
+    },
+    getTagArticles(index, id) {
+      this.curClicked = index
+      this.tagId = id
+      this.page = 1
+      this.tagArticles()
+    },
+    async tagArticles(save = false) {
+      this.loading = true
+      const res = await getHomeArticleList({ tag_id: this.tagId, page: this.page })
+      this.loading = false
+      if (res.code === 1) {
+        if (save) {
+          this.articles = this.articles.concat(res.data.data)
+        } else {
+          this.articles = res.data.data
+        }
+        this.totalPage = res.data.last_page
+      }
+    },
+    loadMore() {
+      this.page += 1
+      this.tagArticles(true)
+    },
+    goRead(id) {
+      const url = this.$router.resolve({ name: 'homeArticle', params: { article_id: id }})
+      window.open(url.href, '_blank')
+    }
   }
 }
 </script>
@@ -103,10 +168,10 @@ export default {
     width: 400px;
     overflow: hidden;
     height: 50px;
-    padding: 0 55px;
+    padding: 0 55px 20px 55px;
     background-color: #fff;
     position: absolute;
-    bottom: -25px;
+    top: 325px;
     left: 50%;
     margin-left: -200px;
     -webkit-border-radius: 25px;
@@ -116,7 +181,7 @@ export default {
       display: inline-block;
       line-height: 50px;
       padding:0 5px;
-      width: 90px;
+      width: 93px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -132,19 +197,65 @@ export default {
   }
 }
 .content {
-  height: 600px;
+  padding-top: 15px;
+  padding-bottom: 50px;
   background-color: #fff;
   margin-top: 50px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  .load-more {
+    text-align: center;
+  }
+  .item {
+    margin-bottom: 15px;
+  }
   .item-icon {
     display: inline-block;
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
+    padding: 15px;
+    vertical-align: top;
   }
   .item-content {
     display: inline-block;
+    margin-left: 10px;
+    width: calc(100% - 200px);
+    padding-top: 5px;
+    border-bottom: 1px solid #f2f2f2;
+    cursor: pointer;
+    .title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    .desc {
+      font-size: 14px;
+      color: #a2a2a2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .info {
+      padding-top: 10px;
+      font-size: 12px;
+      .time {
+        padding: 0 5px;
+      }
+      .readings {
+        padding: 0 5px;
+      }
+      .read {
+        margin-left: 10px;
+      }
+    }
+  }
+  .item-content:hover {
+    background-color: #f2f2f2;
+    border-radius: 4px;
   }
 }
 
