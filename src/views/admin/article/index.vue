@@ -28,9 +28,9 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="searchParams.status" placeholder="请选择文章状态" multiple filterable clearable>
+            <el-select v-model="searchParams.status" placeholder="是否隐藏" multiple filterable clearable>
               <el-option label="正常" :value="0" />
-              <el-option label="隐藏" :value="-1" />
+              <el-option label="隐藏" :value="1" />
             </el-select>
           </el-form-item>
         </el-form>
@@ -66,16 +66,16 @@
             align="center"
           />
           <el-table-column
-            prop="status"
-            label="状态"
+            prop="is_hide"
+            label="是否隐藏"
             align="center"
           >
             <template slot-scope="{row}">
-              <el-tag :type="row.status | statusFilter">{{ row.status_name }}</el-tag>
+              <el-tag :type="row.is_hide | statusFilter">{{ row.is_hide_name }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column
-            prop="level"
+            prop="order"
             label="排序"
             align="center"
           />
@@ -84,7 +84,7 @@
             align="center"
           >
             <template slot-scope="{row}">
-              <el-tag v-if="row.tag" :type="row.tag.type | statusFilter">{{ row.tag.name }}</el-tag>
+              <el-tag v-if="row.tag" :type="row.tag.is_hide | statusFilter">{{ row.tag.name }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column

@@ -22,8 +22,8 @@
               <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
-          <el-form-item label-width="150px" label="文章状态" prop="status">
-            <el-select v-model="articleParams.status" placeholder="请选择文章状态">
+          <el-form-item label-width="150px" label="文章状态" prop="is_hide">
+            <el-select v-model="articleParams.is_hide" placeholder="是否隐藏">
               <statusComponent />
             </el-select>
           </el-form-item>
@@ -31,12 +31,11 @@
             <el-select v-model="articleParams.tag_id" clearable placeholder="标签">
               <el-option v-for="(item) in tagList" :key="item.id" :label="item.name" :value="Number(item.id)">
                 <span style="float: left">{{ item.name }}</span>
-                <span style="float: right; color: #8492a6; font-size: 13px">{{ item.type_name }} ({{ item.status_name }})</span>
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="排序" label-width="150px" prop="level">
-            <el-input v-model="articleParams.level" type="number" min="1" max="128" class="w-200" />
+          <el-form-item label="排序" label-width="150px" prop="order">
+            <el-input v-model="articleParams.order" type="number" min="1" max="128" class="w-200" />
           </el-form-item>
           <el-form-item label="文章内容：" prop="content"/>
           <markdown-editor
@@ -70,9 +69,9 @@ export default {
     return {
       articleParams: {
         title: '',
-        status: '',
+        is_hide: '',
         tag_id: '',
-        level: 1,
+        order: 1,
         content: '',
         icon: '',
         description: ''
@@ -88,8 +87,8 @@ export default {
         icon: [
           { required: true, message: '主图不能为空', trigger: 'blur' }
         ],
-        status: [
-          { required: true, message: '状态不能为空', trigger: 'blur' }
+        is_hide: [
+          { required: true, message: '是否隐藏不能为空', trigger: 'blur' }
         ],
         tag_id: [
           { required: true, message: '标签不能为空', trigger: 'blur' }
@@ -97,7 +96,7 @@ export default {
         content: [
           { required: true, message: '内容不能为空', trigger: 'blur' }
         ],
-        level: [
+        order: [
           { required: true, message: '排序不能为空', trigger: 'blur' }
         ]
       },
@@ -128,8 +127,8 @@ export default {
           this.articleParams.title = res.data.title
           this.article_id = res.data.id
           this.articleParams.tag_id = res.data.tag_id === 0 ? '' : res.data.tag_id
-          this.articleParams.status = res.data.status
-          this.articleParams.level = res.data.level
+          this.articleParams.is_hide = res.data.is_hide
+          this.articleParams.order = res.data.order
           this.articleParams.icon = res.data.icon
           this.articleParams.description = res.data.description
           this.markdownContent = this.$refs.markdownEditor.setHtml(res.data.content)

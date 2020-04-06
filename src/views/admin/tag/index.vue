@@ -7,12 +7,7 @@
             <el-input v-model="searchParams.name" placeholder="标签名称" />
           </el-form-item>
           <el-form-item>
-            <el-select v-model="searchParams.type" placeholder="请选择标签类型" multiple filterable clearable>
-              <typeComponent></typeComponent>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-select v-model="searchParams.status" placeholder="请选择状态" multiple filterable clearable>
+            <el-select v-model="searchParams.is_hide" placeholder="是否隐藏" multiple filterable clearable>
               <statusComponent></statusComponent>
             </el-select>
           </el-form-item>
@@ -44,25 +39,16 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="status_name"
-            label="标签状态"
+            prop="is_hide_name"
+            label="是否隐藏"
             align="center"
           >
             <template slot-scope="{row}">
-              <el-tag :type="row.tag_status | statusFilter">{{ row.status_name }}</el-tag>
+              <el-tag :type="row.is_hide | statusFilter">{{ row.is_hide_name }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column
-            prop="type"
-            label="标签类型"
-            align="center"
-          >
-            <template slot-scope="{row}">
-              <el-tag :type="row.type | statusFilter">{{ row.type_name }}</el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="level"
+            prop="order"
             label="标签等级"
             align="center"
           />
@@ -100,7 +86,7 @@
 import { getTagList, tagDel } from '../../../api/tag'
 import editTag from './components/edit'
 import statusComponent from '../components/status'
-import typeComponent from '../components/type'
+
 export default {
   filters: {
     statusFilter(status) {
@@ -114,8 +100,7 @@ export default {
   },
   components: {
     editTag,
-    statusComponent,
-    typeComponent
+    statusComponent
   },
   data() {
     return {
@@ -124,10 +109,9 @@ export default {
       tagDrawVisible: false,
       searchParams: {
         page: 1,
-        type: [],
         name: '',
-        status: [],
-        level: ''
+        is_hide: [],
+        order: ''
       },
       tagList: [],
       total: 0,

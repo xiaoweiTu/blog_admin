@@ -8,10 +8,17 @@
         </div>
         <div class="desc">{{ site_desc }}</div>
         <div class="tags">
-          <el-tooltip v-for="(item, index) in tags" :key="index" :class=" curClicked === index ? 'tag-active' : '' " class="tag-item" effect="dark" content="LaravelLaravelLaravelLaravelLaravel" placement="top">
-            <el-button @click="getTagArticles(index, item.id)">{{ item.name }}</el-button>
-          </el-tooltip>
-          <i v-if="tags.length > 2" class="el-icon-caret-bottom more-tags" @click="moreTags" />
+          <el-badge :value="total" class="tag-item" :class="curClicked === 0 ? 'active' : ''">
+            <div @click="getTagArticles(0)">All</div>
+          </el-badge>
+          <el-badge
+            v-for="(item) in tags"
+            :key="item.id"
+            :class="curClicked === item.id ? 'active' : ''"
+            class="tag-item"
+            :value="item.articles.length"
+          ><div @click="getTagArticles(item.id)">{{ item.name }} </div></el-badge>
+          <i v-if="tags.length > 4" class="el-icon-caret-bottom more-tags" @click="moreTags" />
         </div>
       </div>
       <div class="content">
@@ -53,11 +60,12 @@ export default {
     return {
       showMore: false,
       tags: [],
-      curClicked: '',
+      curClicked: 0,
       tagId: 0,
       articles: [],
       page: 1,
       totalPage: 1,
+      total: 0,
       loading: false
     }
   },
@@ -94,8 +102,8 @@ export default {
         this.tags = res.data
       }
     },
-    getTagArticles(index, id) {
-      this.curClicked = index
+    getTagArticles(id) {
+      this.curClicked = id
       this.tagId = id
       this.page = 1
       this.tagArticles()
@@ -111,6 +119,9 @@ export default {
           this.articles = res.data.data
         }
         this.totalPage = res.data.last_page
+        if (this.tagId === 0) {
+          this.total = res.data.total
+        }
       }
     },
     loadMore() {
@@ -168,9 +179,9 @@ export default {
     width: 400px;
     overflow: hidden;
     height: 50px;
-    padding: 0 55px 20px 55px;
     background-color: #fff;
     position: absolute;
+    padding: 0 15px;
     top: 325px;
     left: 50%;
     margin-left: -200px;
@@ -179,12 +190,22 @@ export default {
     border-radius: 25px;
     .tag-item {
       display: inline-block;
+      width: 18%;
+      height: 50px;
       line-height: 50px;
-      padding:0 5px;
-      width: 93px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      text-align: center;
+      cursor: pointer;
+      font-size: 15px;
+      &:hover {
+        color:red;
+      }
+      /deep/ .el-badge__content.is-fixed {
+        top: 10px;
+        right: 20px;
+      }
+    }
+    .tag-item.active {
+      color: red;
     }
     .more-tags {
       display: inline-block;
