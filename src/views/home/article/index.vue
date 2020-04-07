@@ -5,10 +5,10 @@
         <div class="left">
           <img src="http://qiniu.txwei.cn/Fut1P7edmWvCqvm5mztihRpOzQzO" alt="" class="el-avatar">
           <div class="name">
-            <p class="auth-name">小圆圆伍</p>
+            <p class="auth-name">{{ site_author }}</p>
             <p class="who">站长/PHP</p>
           </div>
-          <el-button class="msg">私信</el-button>
+          <el-button class="msg" @click="sendMsg">私信</el-button>
         </div>
         <div class="right">
           <div class="time">
@@ -18,9 +18,9 @@
             <span class="reading">
               <i class="el-icon-view">&nbsp;&nbsp;{{ articleRow.clicked }}</i>
             </span>
-            <span class="talks">
-              <i class="el-icon-chat-dot-round">&nbsp;&nbsp;154</i>
-            </span>
+            <!--<span class="talks">-->
+              <!--<i class="el-icon-chat-dot-round">&nbsp;&nbsp;154</i>-->
+            <!--</span>-->
             <span class="likes">
               <i class="el-icon-star-off">&nbsp;&nbsp;{{ articleRow.likes }}</i>
             </span>
@@ -33,7 +33,7 @@
           本作品采用<a href="https://learnku.com/docs/guide/cc4.0/6589">《CC 协议》</a>，转载必须注明作者和本文链接
         </blockquote>
         <div class="like">
-          <i class="el-icon-star-off" />
+          <i class="el-icon-star-off" style="cursor: pointer;" @click="clickLiked" />
           <p>赞</p>
         </div>
       </div>
@@ -48,6 +48,7 @@
 import { getArticleRow } from '../../../api/article'
 // import Talk from '../components/talks'
 import './css/markdown.css'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Index',
@@ -59,6 +60,11 @@ export default {
       articleId: 0,
       articleRow: {}
     }
+  },
+  computed: {
+    ...mapGetters([
+      'site_author'
+    ])
   },
   created() {
     this.articleId = this.$route.params.article_id
@@ -76,6 +82,18 @@ export default {
       if (res.code === 1) {
         this.articleRow = res.data
       }
+    },
+    sendMsg() {
+      this.$message({
+        message: '暂未开通!',
+        type: 'info'
+      })
+    },
+    clickLiked() {
+      this.$message({
+        message: '暂未开通!',
+        type: 'info'
+      })
     }
   }
 }
