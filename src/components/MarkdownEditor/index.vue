@@ -1,13 +1,7 @@
 <template>
   <div>
-    <div :id="id">
-
-    </div>
-    <input
-            ref="files"
-            type="file"
-            accept="image/*"
-    >
+    <div :id="id" />
+    <input ref="files" style="display: none" type="file" accept="image/*" @change="uploadFile">
   </div>
 </template>
 
@@ -20,6 +14,7 @@ import 'highlight.js/styles/github.css'
 
 import Editor from 'tui-editor'
 import defaultOptions from './default-options'
+import request from '@/utils/request'
 
 export default {
   name: 'MarkdownEditor',
@@ -105,6 +100,25 @@ export default {
       this.editor.on('change', () => {
         this.$emit('input', this.editor.getValue())
       })
+      /*
+        * 添加自定义按钮
+        * */
+      // 获取编辑器上的功能条
+      const toolbar = this.editor.getUI().getToolbar()
+      const fileDom = this.$refs.files
+      // 添加事件
+      this.editor.eventManager.addEventType('uploadEvent')
+      this.editor.eventManager.listen('uploadEvent', () => {
+        fileDom.click()
+        // Do some other thing...
+      })
+      // 添加自定义按钮 第二个参数代表位置，不传默认放在最后
+      toolbar.addButton({
+        name: 'customize',
+        className: 'upload-img',
+        event: 'uploadEvent',
+        tooltip: 'insert image'
+      }, 13)
     },
     destroyEditor() {
       if (!this.editor) return
@@ -123,22 +137,46 @@ export default {
     getHtml() {
       return this.editor.getHtml()
     },
-    setButtonOfImg() {
-      const editor = this.editor.invoke('getCurrentModeEditor')
-      const editorUI = this.editor.invoke('getUI')
-      const toolbar = editorUI.getToolbar()
-      const fileDom = this.$refs.files
-      editor.eventManager.addEventType('insertImg')
-      editor.eventManager.listen('insertImg', function() {
-        fileDom.click()
+    uploadFile(e) {
+      const target = e.target
+      const file = target.files[0]
+      const formData = new FormData()
+      formData.append('image', file)
+      request({
+        method: 'post',
+        url: process.env.VUE_APP_UPLOAD_ACTION,
+        data: formData
       })
-      toolbar.addButton({
-        name: 'customize',
-        className: 'toast toast-img-icon',
-        event: 'insertImg',
-        tooltip: 'Insert img'
-      }, 13)
+        .then(res => {
+          // 上传成功地址拼接
+          const imgUrl = res.data
+          this.addImgToMd(imgUrl)
+        })
+        .catch(error => {
+          console.error(error.response)
+        })
+      target.value = ''
+    },
+    // 添加图片到markdown
+    addImgToMd(data) {
+      const editor = this.editor.getCodeMirror()
+      const editorHtml = this.editor.getCurrentModeEditor()
+      const isMarkdownMode = this.editor.isMarkdownMode()
+      if (isMarkdownMode) {
+        editor.replaceSelection(`![img](${data})`)
+      } else {
+        const range = editorHtml.getRange()
+        const img = document.createElement('img')
+        img.src = `${data}`
+        img.alt = 'img'
+        range.insertNode(img)
+      }
     }
   }
 }
 </script>
+<style lang="scss">
+  .upload-img.tui-toolbar-icons {
+    background-position: -130px -4px;
+  }
+</style>

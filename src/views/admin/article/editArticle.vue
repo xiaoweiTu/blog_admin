@@ -37,9 +37,15 @@
           <el-form-item label="排序" label-width="150px" prop="order">
             <el-input v-model="articleParams.order" type="number" min="1" max="128" class="w-200" />
           </el-form-item>
-          <el-form-item label="文章内容：" prop="content" />
-          <!--          <Tinymce ref="tinymce" v-model="markdownContent"></Tinymce>-->
+          <el-form-item label="文章内容：" prop="content" label-width="150px">
+            <el-select v-model="editor">
+              <el-option label="MarkDown编辑器" :value="1" />
+              <el-option label="富文本编辑器" :value="2" />
+            </el-select>
+          </el-form-item>
+          <Tinymce v-if="editor === 2" ref="tinymce" v-model="markdownContent" />
           <markdown-editor
+            v-else
             ref="markdownEditor"
             v-model="markdownContent"
             language="zh_CN"
@@ -105,7 +111,8 @@ export default {
       article_id: 0,
       tagList: [],
       uploadAction: '',
-      uploadHeaders: ''
+      uploadHeaders: '',
+      editor: 1
     }
   },
   computed: {
@@ -139,9 +146,11 @@ export default {
     },
     // 提交
     submitArticle() {
-      this.this.$refs.markdownEditor.setButtonOfImg()
-      return
-      this.articleParams.content = this.$refs.markdownEditor.getHtml()
+      if (this.editor === 1) {
+        this.articleParams.content = this.$refs.markdownEditor.getHtml()
+      } else {
+        this.articleParams.content = this.markdownContent
+      }
       if (this.articleParams.content === '') {
         this.$message({
           message: '内容不能为空',
