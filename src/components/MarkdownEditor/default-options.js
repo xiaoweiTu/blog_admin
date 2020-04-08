@@ -23,7 +23,7 @@ export default {
     'outdent',
     'divider',
     'table',
-    'image',
+    // 'image',
     'link',
     'divider',
     'code',

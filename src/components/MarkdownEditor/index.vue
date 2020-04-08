@@ -1,5 +1,14 @@
 <template>
-  <div :id="id" />
+  <div>
+    <div :id="id">
+
+    </div>
+    <input
+            ref="files"
+            type="file"
+            accept="image/*"
+    >
+  </div>
 </template>
 
 <script>
@@ -113,6 +122,22 @@ export default {
     },
     getHtml() {
       return this.editor.getHtml()
+    },
+    setButtonOfImg() {
+      const editor = this.editor.invoke('getCurrentModeEditor')
+      const editorUI = this.editor.invoke('getUI')
+      const toolbar = editorUI.getToolbar()
+      const fileDom = this.$refs.files
+      editor.eventManager.addEventType('insertImg')
+      editor.eventManager.listen('insertImg', function() {
+        fileDom.click()
+      })
+      toolbar.addButton({
+        name: 'customize',
+        className: 'toast toast-img-icon',
+        event: 'insertImg',
+        tooltip: 'Insert img'
+      }, 13)
     }
   }
 }

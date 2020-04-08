@@ -37,7 +37,8 @@
           <el-form-item label="排序" label-width="150px" prop="order">
             <el-input v-model="articleParams.order" type="number" min="1" max="128" class="w-200" />
           </el-form-item>
-          <el-form-item label="文章内容：" prop="content"/>
+          <el-form-item label="文章内容：" prop="content" />
+          <!--          <Tinymce ref="tinymce" v-model="markdownContent"></Tinymce>-->
           <markdown-editor
             ref="markdownEditor"
             v-model="markdownContent"
@@ -56,6 +57,7 @@
 
 <script>
 import MarkdownEditor from '@/components/MarkdownEditor'
+import Tinymce from '@/components/Tinymce'
 import { articleSave, getArticleRow } from '../../../api/article'
 import { getAllTags } from '../../../api/tag'
 import statusComponent from '../components/status'
@@ -64,7 +66,7 @@ import { getToken } from '../../../utils/auth'
 
 export default {
   name: 'EditArticle',
-  components: { MarkdownEditor, statusComponent },
+  components: { MarkdownEditor, statusComponent, Tinymce },
   data() {
     return {
       articleParams: {
@@ -137,6 +139,8 @@ export default {
     },
     // 提交
     submitArticle() {
+      this.this.$refs.markdownEditor.setButtonOfImg()
+      return
       this.articleParams.content = this.$refs.markdownEditor.getHtml()
       if (this.articleParams.content === '') {
         this.$message({
