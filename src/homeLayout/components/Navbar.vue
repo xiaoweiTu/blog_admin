@@ -6,11 +6,6 @@
       </a>
     </el-col>
     <el-col :span="3">
-      <div class="search">
-        <input type="text" placeholder="搜索" class="search-input">
-        <i class="el-icon-search search-icon"></i>
-      </div>
-      <i class="el-icon-user-solid user-icon"></i>
     </el-col>
   </el-row>
 </template>

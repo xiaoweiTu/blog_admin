@@ -92,9 +92,6 @@ export default {
         description: [
           { required: true, message: '描述不能为空', trigger: 'blur' }
         ],
-        icon: [
-          { required: true, message: '主图不能为空', trigger: 'blur' }
-        ],
         is_hide: [
           { required: true, message: '是否隐藏不能为空', trigger: 'blur' }
         ],
@@ -234,6 +231,9 @@ export default {
     width: 178px;
     height: 178px;
     display: block;
+  }
+  /deep/ .tui-editor .te-md-splitter {
+    width: 100%;
   }
 }
 </style>

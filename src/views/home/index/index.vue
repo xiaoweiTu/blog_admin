@@ -23,10 +23,8 @@
       </div>
       <div class="content">
         <div v-for="(item, index) in articles" :key="index" class="item" @click="goRead(item.id)">
-          <img :src="item.icon" alt="" class="item-icon">
           <div class="item-content">
             <p class="title">
-              <i class="el-icon-star-on" />
               {{ item.title }}
             </p>
             <p class="desc">
@@ -38,6 +36,9 @@
                 <i class="el-icon-view" />
                 <span class="readings">{{ item.clicked }}</span>
               </span>
+              <span class="likes">
+              <i class="el-icon-star-on">&nbsp;&nbsp;{{ item.likes }}</i>
+            </span>
             </p>
           </div>
         </div>
@@ -229,7 +230,7 @@ export default {
     text-align: center;
   }
   .item {
-    margin-bottom: 15px;
+    padding:10px;
   }
   .item-icon {
     display: inline-block;
@@ -240,9 +241,8 @@ export default {
   }
   .item-content {
     display: inline-block;
-    margin-left: 10px;
-    width: calc(100% - 200px);
-    padding-top: 5px;
+    width:100%;
+    padding:0 10px;
     border-bottom: 1px solid #f2f2f2;
     cursor: pointer;
     .title {
@@ -269,7 +269,7 @@ export default {
       .readings {
         padding: 0 5px;
       }
-      .read {
+      .read, .likes{
         margin-left: 10px;
       }
     }

@@ -40,3 +40,11 @@ export function articleDel(data) {
   })
 }
 
+export function articleLike(data) {
+  return request({
+    url: '/article/like',
+    method: 'post',
+    data
+  })
+}
+

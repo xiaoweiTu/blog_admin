@@ -8,7 +8,6 @@
             <p class="auth-name">{{ site_author }}</p>
             <p class="who">站长/PHP</p>
           </div>
-          <el-button class="msg" @click="sendMsg">私信</el-button>
         </div>
         <div class="right">
           <div class="time">
@@ -19,10 +18,10 @@
               <i class="el-icon-view">&nbsp;&nbsp;{{ articleRow.clicked }}</i>
             </span>
             <!--<span class="talks">-->
-              <!--<i class="el-icon-chat-dot-round">&nbsp;&nbsp;154</i>-->
+            <!--<i class="el-icon-chat-dot-round">&nbsp;&nbsp;154</i>-->
             <!--</span>-->
             <span class="likes">
-              <i class="el-icon-star-off">&nbsp;&nbsp;{{ articleRow.likes }}</i>
+              <i class="el-icon-star-on">&nbsp;&nbsp;{{ articleRow.likes }}</i>
             </span>
           </div>
         </div>
@@ -38,27 +37,23 @@
         </div>
       </div>
       <div class="footer">
-        <!--        <Talk class="talk"></Talk>-->
       </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import { getArticleRow } from '../../../api/article'
-// import Talk from '../components/talks'
+import { getArticleRow, articleLike } from '../../../api/article'
 import './css/markdown.css'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Index',
-  components: {
-    // Talk
-  },
   data() {
     return {
       articleId: 0,
-      articleRow: {}
+      articleRow: {},
+      addClickNum: 1
     }
   },
   computed: {
@@ -78,22 +73,18 @@ export default {
   },
   methods: {
     async article() {
-      const res = await getArticleRow({ id: this.articleId })
+      const res = await getArticleRow({ id: this.articleId, add_click: this.addClickNum })
       if (res.code === 1) {
         this.articleRow = res.data
       }
     },
-    sendMsg() {
-      this.$message({
-        message: '暂未开通!',
-        type: 'info'
-      })
-    },
-    clickLiked() {
-      this.$message({
-        message: '暂未开通!',
-        type: 'info'
-      })
+
+    async clickLiked() {
+      const result = await articleLike({ id: this.articleId })
+      if (result.code === 1) {
+        this.addClickNum = 0
+        this.article()
+      }
     }
   }
 }
