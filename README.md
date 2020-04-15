@@ -2,6 +2,9 @@
 
 > 一个个人博客的基础后台兼前台模板
 
+# 后台API
+
+[fast_blog_api](https://github.com/xiaoweiTu/fast_blog_api)
 
 ## Build Setup
 
