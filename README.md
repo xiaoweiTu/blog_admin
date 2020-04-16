@@ -34,9 +34,9 @@ npm run dev
 
 ## 后台
 
-![admin_home](http://qiniu.txwei.cn/admin_home)
+![img](http://qiniu.txwei.cn/admin_home)
 
-![home_table](http://qiniu.txwei.cn/home_table)
+![img](http://qiniu.txwei.cn/home_table)
 
 ![tag_list](http://qiniu.txwei.cn/tag_list)
 
