@@ -30,42 +30,59 @@ VUE_APP_BASE_API_UPLOAD = ''
 # 开发模式启动
 npm run dev
 ```
+# 页面截图
+
+## 后台
+
+![admin_home](http://qiniu.txwei.cn/admin_home.jpg)
+
+![home_table](http://qiniu.txwei.cn/home_table)
+
+![tag_list](http://qiniu.txwei.cn/tag_list)
+
+![tags_edit](http://qiniu.txwei.cn/tags_edit)
+
+![article_list](http://qiniu.txwei.cn/article_list)
+
+![article_edit](http://qiniu.txwei.cn/article_edit)
+
+![editor_choose](http://qiniu.txwei.cn/editor_choose)
+
+
+## 首页
+
+![home](http://qiniu.txwei.cn/home)
+
+![article_likes](http://qiniu.txwei.cn/article_likes)
 
 将会启动在 http://localhost:8080
 
 ## 打包
 
 ```bash
-# build for test environment
+# 构建测试环境
 npm run build:stage
 
-# build for production environment
+# 构建生产环境
 npm run build:prod
 ```
 
 ## Advanced
 
 ```bash
-# preview the release environment effect
+# 预览发布环境效果
 npm run preview
 
-# preview the release environment effect + static resource analysis
+# 预览发布环境效果 + 静态资源分析
 npm run preview -- --report
 
-# code format check
+# 代码格式检查
 npm run lint
 
-# code format check and auto fix
+# 代码格式检查并自动修复
 npm run lint -- --fix
 ```
 
-## Browsers support
-
-Modern browsers and Internet Explorer 10+.
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| --------- | --------- | --------- | --------- |
-| IE10, IE11, Edge| last 2 versions| last 2 versions| last 2 versions
 
 ## License
 
