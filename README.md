@@ -6,25 +6,25 @@
 
 [fast_blog_api](https://github.com/xiaoweiTu/fast_blog_api)
 
-## Build Setup
+## 安装使用
 
 ```bash
-# clone the project
+# 克隆项目
 git clone https://github.com/xiaoweiTu/blog_admin.git
 
-# enter the project directory
+# 进入项目目录
 cd blog_admin
 
-# install dependency
+# 安装依赖
 npm install
 
-# develop
+# 开发模式启动
 npm run dev
 ```
 
-This will automatically open http://localhost:8080
+将会启动在 http://localhost:8080
 
-## Build
+## 打包
 
 ```bash
 # build for test environment
