@@ -34,26 +34,26 @@ npm run dev
 
 ## 后台
 
-![admin_home](http://qiniu.txwei.cn/admin_home.jpg)
+![admin_home](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/admin_home.jpg)
 
-![home_table](http://qiniu.txwei.cn/home_table)
+![tag_list](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/tag_list.jpg)
 
-![tag_list](http://qiniu.txwei.cn/tag_list)
+![tag_edit](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/tag_edit.jpg)
 
-![tags_edit](http://qiniu.txwei.cn/tags_edit)
+![article_list](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/article_list.jpg)
 
-![article_list](http://qiniu.txwei.cn/article_list)
+![article_edit](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/article_edit.jpg)
 
-![article_edit](http://qiniu.txwei.cn/article_edit)
-
-![editor_choose](http://qiniu.txwei.cn/editor_choose)
+![editor_choose](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/editor_choose.jpg)
 
 
 ## 首页
 
-![home](http://qiniu.txwei.cn/home)
+![home](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/home.jpg)
 
-![article_likes](http://qiniu.txwei.cn/article_likes)
+![article_details](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/article_details.jpg)
+
+![article_likes](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/article_likes.jpg)
 
 将会启动在 http://localhost:8080
 
