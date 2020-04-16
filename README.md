@@ -42,7 +42,7 @@ npm run dev
 
 ![article_list](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/article_list.jpg)
 
-![article_edit](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/article_edit.jpg)
+![admin_article_edit](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/admin_article_edit.jpg)
 
 ![editor_choose](https://github.com/xiaoweiTu/blog_admin/blob/master/public/images/editor_choose.jpg)
 
