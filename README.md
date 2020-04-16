@@ -34,7 +34,7 @@ npm run dev
 
 ## 后台
 
-![admin_home](http://qiniu.txwei.cn/admin_home)
+![admin_home](http://qiniu.txwei.cn/admin_home.jpg)
 
 ![home_table](http://qiniu.txwei.cn/home_table)
 
@@ -48,7 +48,6 @@ npm run dev
 
 ![editor_choose](http://qiniu.txwei.cn/editor_choose)
 
-![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
 
 ## 首页
 
