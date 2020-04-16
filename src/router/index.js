@@ -62,20 +62,6 @@ export const constantRoutes = [
         component: () => import('@/views/home/article/index'),
         meta: { title: '文章', icon: 'book' },
         hidden: true
-      },
-      {
-        path: '/timeline',
-        name: 'timeline',
-        component: () => import('@/views/home/timeline/index'),
-        meta: { title: '时光机', icon: 'book' },
-        hidden: true
-      },
-      {
-        path: '/course/:tag_id',
-        name: 'course',
-        component: () => import('@/views/home/course/index'),
-        meta: { title: '教程', icon: 'book' },
-        hidden: true
       }
     ]
   },

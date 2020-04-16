@@ -24,6 +24,14 @@ export function getClickedCount(params) {
   })
 }
 
+export function getLikesCount(params) {
+  return request({
+    url: '/web/totalLikes',
+    method: 'get',
+    params
+  })
+}
+
 export function getArticlesInSeven(params) {
   return request({
     url: '/web/articlesInSeven',
@@ -35,6 +43,14 @@ export function getArticlesInSeven(params) {
 export function getClickedInSeven(params) {
   return request({
     url: '/web/clickedInSeven',
+    method: 'get',
+    params
+  })
+}
+
+export function getLikesInSeven(params) {
+  return request({
+    url: '/web/likesInSeven',
     method: 'get',
     params
   })

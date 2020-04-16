@@ -6,7 +6,8 @@ const state = {
   site_keyword: '',
   site_author: '',
   site_record: '',
-  site_icon_url: ''
+  site_icon_url: '',
+  site_who: ''
 }
 
 const mutations = {
@@ -27,6 +28,9 @@ const mutations = {
   },
   set_site_icon_url(state, site_icon_url) {
     state.site_icon_url = site_icon_url
+  },
+  set_site_who(state, who) {
+    state.site_who = who
   }
 }
 
@@ -41,6 +45,7 @@ const actions = {
           commit('set_site_record', data.web_record)
           commit('set_site_icon_url', data.web_icon)
           commit('set_site_keyword', data.web_keyword)
+          commit('set_site_who', data.web_who)
         }
         resolve()
       }).catch(error => {

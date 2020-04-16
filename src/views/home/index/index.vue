@@ -25,7 +25,7 @@
         <div v-for="(item, index) in articles" :key="index" class="item" @click="goRead(item.id)">
           <div class="item-content">
             <p class="title">
-              {{ item.title }}
+              <el-tag type="info" style="margin-right: 15px;">{{ item.tag.name }}</el-tag>{{ item.title }}
             </p>
             <p class="desc">
               {{ item.description }}

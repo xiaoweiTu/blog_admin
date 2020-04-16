@@ -3,10 +3,10 @@
     <el-col :span="24">
       <header v-if="articleRow" class="info-box">
         <div class="left">
-          <img src="http://qiniu.txwei.cn/Fut1P7edmWvCqvm5mztihRpOzQzO" alt="" class="el-avatar">
+          <img :src="site_icon_url" alt="" class="el-avatar">
           <div class="name">
             <p class="auth-name">{{ site_author }}</p>
-            <p class="who">站长/PHP</p>
+            <p class="who">{{ site_who }}</p>
           </div>
         </div>
         <div class="right">
@@ -27,6 +27,7 @@
         </div>
       </header>
       <div class="content">
+        <h1 class="text-center">{{ articleRow.title }}</h1>
         <div class="content-html" v-html="articleRow.content" />
         <blockquote style="font-size: 0.9em;">
           本作品采用<a href="https://learnku.com/docs/guide/cc4.0/6589">《CC 协议》</a>，转载必须注明作者和本文链接
@@ -36,8 +37,7 @@
           <p>赞</p>
         </div>
       </div>
-      <div class="footer">
-      </div>
+      <div class="footer" />
     </el-col>
   </el-row>
 </template>
@@ -58,7 +58,9 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'site_author'
+      'site_author',
+      'site_icon_url',
+      'site_who'
     ])
   },
   created() {

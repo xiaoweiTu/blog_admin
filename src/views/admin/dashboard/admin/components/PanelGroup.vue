@@ -3,7 +3,7 @@
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" @click="handleSetLineChartData('articles')">
         <div class="card-panel-icon-wrapper icon-people">
-          <svg-icon icon-class="table" class-name="card-panel-icon" />
+          <svg-icon icon-class="clipboard" class-name="card-panel-icon" />
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
@@ -26,12 +26,25 @@
         </div>
       </div>
     </el-col>
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel" @click="handleSetLineChartData('likes')">
+        <div class="card-panel-icon-wrapper icon-message">
+          <svg-icon icon-class="star" class-name="card-panel-icon" />
+        </div>
+        <div class="card-panel-description">
+          <div class="card-panel-text">
+            总赞数数
+          </div>
+          <count-to :start-val="0" :end-val="Number(likesCounts)" :duration="1000" class="card-panel-num" />
+        </div>
+      </div>
+    </el-col>
   </el-row>
 </template>
 
 <script>
 import CountTo from 'vue-count-to'
-import { getArticleCount, getClickedCount } from '../../../../../api/site'
+import { getArticleCount, getClickedCount, getLikesCount } from '../../../../../api/site'
 
 export default {
   components: {
@@ -40,12 +53,14 @@ export default {
   data() {
     return {
       articleCounts: 0,
-      clickedCounts: 0
+      clickedCounts: 0,
+      likesCounts: 0
     }
   },
   created() {
     this.articleCount()
     this.clickedCount()
+    this.likesCount()
   },
   methods: {
     handleSetLineChartData(type) {
@@ -61,6 +76,12 @@ export default {
       const res = await getClickedCount()
       if (res.code === 1) {
         this.clickedCounts = res.data
+      }
+    },
+    async likesCount() {
+      const res = await getLikesCount()
+      if (res.code === 1) {
+        this.likesCounts = res.data
       }
     }
   }

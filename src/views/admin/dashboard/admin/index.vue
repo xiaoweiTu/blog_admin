@@ -10,7 +10,7 @@
 <script>
 import PanelGroup from './components/PanelGroup'
 import LineChart from './components/LineChart'
-import { getArticlesInSeven, getClickedInSeven } from '../../../../api/site'
+import { getArticlesInSeven, getClickedInSeven, getLikesInSeven } from '../../../../api/site'
 
 const lineChartData = {
   articles: {
@@ -18,6 +18,10 @@ const lineChartData = {
     bottomName: []
   },
   clicks: {
+    actualData: [0],
+    bottomName: []
+  },
+  likes: {
     actualData: [0],
     bottomName: []
   }
@@ -40,6 +44,7 @@ export default {
   created() {
     this.articleInSeven()
     this.clickedInSeven()
+    this.likesInSeven()
   },
   methods: {
     handleSetLineChartData(type) {
@@ -65,6 +70,18 @@ export default {
           return item.total
         })
         lineChartData.clicks.bottomName = data.map((item) => {
+          return item.created_at.substr(0, 10)
+        })
+      }
+    },
+    async likesInSeven() {
+      const res = await getLikesInSeven()
+      if (res.code === 1) {
+        const data = res.data
+        lineChartData.likes.actualData = data.map((item) => {
+          return item.total
+        })
+        lineChartData.likes.bottomName = data.map((item) => {
           return item.created_at.substr(0, 10)
         })
       }
