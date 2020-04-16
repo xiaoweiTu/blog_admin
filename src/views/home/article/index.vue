@@ -84,6 +84,10 @@ export default {
     async clickLiked() {
       const result = await articleLike({ id: this.articleId })
       if (result.code === 1) {
+        this.$message({
+          message: '点赞成功,每天只对它点赞5次哟',
+          type: 'success'
+        })
         this.addClickNum = 0
         this.article()
       }

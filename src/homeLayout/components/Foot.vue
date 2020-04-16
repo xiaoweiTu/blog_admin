@@ -5,7 +5,7 @@
     </el-col>
     <el-col :span="16">
       <div class="site-record">
-        Copy Right @ 2018-2020 {{ site_record }} design by 小圆圆伍
+        Copy Right @ 2020 <a href="http://beian.miit.gov.cn/" target="_blank">{{ site_record }}</a> design by <a href="http://wu.sanhai.cool" target="_blank">小圆圆伍</a>
       </div>
     </el-col>
   </el-row>
