@@ -18,6 +18,15 @@ cd blog_admin
 # 安装依赖
 npm install
 
+# 配置API地址
+在对应环境的.env文件中配置
+
+API域名
+VUE_APP_BASE_API = ''
+
+// 上传图片地址 一般是 VUE_APP_BASE_API+/web/upload
+VUE_APP_BASE_API_UPLOAD = ''
+
 # 开发模式启动
 npm run dev
 ```
