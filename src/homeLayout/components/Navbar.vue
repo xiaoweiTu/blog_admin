@@ -11,32 +11,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   name: 'NavBar',
   data() {
     return {
       series: []
     }
-  },
-  computed: {
-    ...mapGetters([
-      'site_name',
-      'site_desc',
-      'site_author',
-      'site_keyword',
-      'site_icon_url'
-    ])
-  },
-  updated() {
-    document.title = this.site_name
-    document.getElementById('site-icon').setAttribute('href', this.site_icon_url)
-    document.getElementById('site-author').content = this.site_owner
-    document.getElementById('site-desc').content = this.site_desc
-    document.getElementById('site-keywords').content = this.site_keyword
-  },
-  methods: {
   }
 }
 </script>
