@@ -38,12 +38,12 @@
             <el-input v-model="articleParams.order" type="number" min="1" max="128" class="w-200" />
           </el-form-item>
           <el-form-item label="文章内容：" prop="content" label-width="150px">
-            <el-select v-model="editor">
-              <el-option label="MarkDown编辑器" :value="1" />
-              <el-option label="富文本编辑器" :value="2" />
+            <el-select v-model="articleParams.editor_type">
+              <el-option label="MarkDown编辑器" :value="0" />
+              <el-option label="富文本编辑器" :value="1" />
             </el-select>
           </el-form-item>
-          <Tinymce v-if="editor === 2" ref="tinymce" v-model="markdownContent" />
+          <Tinymce v-if="articleParams.editor_type === 1" ref="tinymce" v-model="markdownContent" />
           <markdown-editor
             v-else
             ref="markdownEditor"
@@ -77,12 +77,13 @@ export default {
     return {
       articleParams: {
         title: '',
-        is_hide: '',
+        is_hide: 0,
         tag_id: '',
-        order: 1,
+        order: 100,
         content: '',
         icon: '',
-        description: ''
+        description: '',
+        editor_type: 0
       },
       markdownContent: '',
       articleRules: {
@@ -109,7 +110,6 @@ export default {
       tagList: [],
       uploadAction: '',
       uploadHeaders: '',
-      editor: 1
     }
   },
   computed: {
@@ -137,13 +137,18 @@ export default {
           this.articleParams.order = res.data.order
           this.articleParams.icon = res.data.icon
           this.articleParams.description = res.data.description
-          this.markdownContent = this.$refs.markdownEditor.setHtml(res.data.content)
+          this.articleParams.editor_type = res.data.editor_type
+          if (res.data.editor_type === 0) {
+            this.markdownContent = this.$refs.markdownEditor.setHtml(res.data.content)
+          } else {
+            this.markdownContent = res.data.content
+          }
         }
       }
     },
     // 提交
     submitArticle() {
-      if (this.editor === 1) {
+      if (this.articleParams.editor_type === 0) {
         this.articleParams.content = this.$refs.markdownEditor.getHtml()
       } else {
         this.articleParams.content = this.markdownContent

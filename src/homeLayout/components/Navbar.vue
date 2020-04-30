@@ -5,18 +5,26 @@
         <span>首页</span>
       </a>
     </el-col>
-    <el-col :span="3">
+    <el-col v-if="name && email" :span="3" >
+      <p>{{ name }} - {{ email }}</p>
     </el-col>
   </el-row>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'NavBar',
   data() {
     return {
-      series: []
     }
+  },
+  computed: {
+    ...mapGetters([
+      'name',
+      'is_admin',
+      'email'
+    ])
   }
 }
 </script>

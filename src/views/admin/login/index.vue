@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">欢迎回来</h3>
+        <h3 class="title">欢迎回来-管理员</h3>
       </div>
 
       <el-form-item prop="email">
@@ -87,8 +87,8 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+          this.$store.dispatch('user/adminLogin', this.loginForm).then(() => {
+            this.$router.push({ path: this.redirect || '/admin' })
             this.loading = false
           }).catch(() => {
             this.loading = false

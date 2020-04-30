@@ -9,7 +9,7 @@
         <div class="desc">{{ site_desc }}</div>
         <div class="tags">
           <el-badge :value="total" class="tag-item" :class="curClicked === 0 ? 'active' : ''">
-            <div @click="getTagArticles(0)">All</div>
+            <div @click="getTagArticles('')">All</div>
           </el-badge>
           <el-badge
             v-for="(item) in tags"
@@ -62,7 +62,7 @@ export default {
       showMore: false,
       tags: [],
       curClicked: 0,
-      tagId: 0,
+      tagId: '',
       articles: [],
       page: 1,
       totalPage: 1,
@@ -120,7 +120,7 @@ export default {
           this.articles = res.data.data
         }
         this.totalPage = res.data.last_page
-        if (this.tagId === 0) {
+        if (this.tagId === 0 || this.tagId === '') {
           this.total = res.data.total
         }
       }

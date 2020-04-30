@@ -28,7 +28,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="searchParams.status" placeholder="是否隐藏" multiple filterable clearable>
+            <el-select v-model="searchParams.is_hide" placeholder="是否隐藏" multiple filterable clearable>
               <el-option label="正常" :value="0" />
               <el-option label="隐藏" :value="1" />
             </el-select>
@@ -137,7 +137,7 @@ export default {
         title: '',
         tag_id: [],
         type: [],
-        status: [],
+        is_hide: [],
         page: 1
       },
       typeMappings: [],

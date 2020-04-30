@@ -12,7 +12,7 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-input v-model="searchParams.level" placeholder="排序等级" />
+            <el-input v-model="searchParams.order" placeholder="排序等级" />
           </el-form-item>
         </el-form>
         <el-button type="success" class="mb-20" @click="openTagDrawer({})">新增标签</el-button>

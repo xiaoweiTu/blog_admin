@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, userLogin, userRegister, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -7,7 +7,7 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     email: '',
-    avatar: '',
+    is_admin: 0,
     id: ''
   }
 }
@@ -29,22 +29,28 @@ const mutations = {
   },
   SET_ID: (state, id) => {
     state.id = id
+  },
+  SET_IS_ADMIN: (state, is_admin) => {
+    state.is_admin = is_admin
   }
 }
 
 const actions = {
-  // user login
-  login({ commit }, userInfo) {
+  // admin login
+  adminLogin({ commit }, userInfo) {
     const { email, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ email: email.trim(), password: password }).then(response => {
-        const { code, data } = response
+        const { code, data, msg } = response
         if (code === 1) {
           commit('SET_TOKEN', data.token)
           commit('SET_NAME', data.user.name)
           commit('SET_EMAIL', data.user.email)
           commit('SET_ID', data.user.id)
+          commit('SET_IS_ADMIN', data.user.is_admin)
           setToken(data.token)
+        } else {
+          throw new Error(msg)
         }
         resolve()
       }).catch(error => {
@@ -52,15 +58,57 @@ const actions = {
       })
     })
   },
-
+  userLogin({ commit }, userInfo) {
+    const { email, password } = userInfo
+    return new Promise((resolve, reject) => {
+      userLogin({ email: email.trim(), password: password }).then(response => {
+        const { code, data, msg } = response
+        if (code === 1) {
+          commit('SET_TOKEN', data.token)
+          commit('SET_NAME', data.user.name)
+          commit('SET_EMAIL', data.user.email)
+          commit('SET_ID', data.user.id)
+          commit('SET_IS_ADMIN', data.user.is_admin)
+          setToken(data.token)
+        } else {
+          throw new Error(msg)
+        }
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  userRegister({ commit }, userInfo) {
+    const { email, password, name } = userInfo
+    return new Promise((resolve, reject) => {
+      userRegister({ email: email.trim(), password: password, name: name }).then(response => {
+        const { code, data, msg } = response
+        if (code === 1) {
+          commit('SET_TOKEN', data.token)
+          commit('SET_NAME', data.user.name)
+          commit('SET_EMAIL', data.user.email)
+          commit('SET_ID', data.user.id)
+          commit('SET_IS_ADMIN', data.user.is_admin)
+          setToken(data.token)
+        } else {
+          throw new Error(msg)
+        }
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const { name, id, email } = response.data
+        const { name, id, email, is_admin } = response.data
         commit('SET_NAME', name)
         commit('SET_ID', id)
         commit('SET_EMAIL', email)
+        commit('SET_IS_ADMIN', is_admin)
         resolve()
       }).catch(error => {
         reject(error)
