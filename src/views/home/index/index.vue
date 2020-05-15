@@ -22,10 +22,11 @@
         </div>
       </div>
       <div class="content">
-        <div v-for="(item, index) in articles" :key="index" class="item" @click="goRead(item.id)">
+        <div v-for="(item, index) in articles" :key="index" class="item" @click="goRead(item.id, item.type)">
           <div class="item-content">
             <p class="title">
-              <el-tag type="info" style="margin-right: 15px;">{{ item.tag.name }}</el-tag>{{ item.title }}
+              <el-tag :type="item.tag.type | statusFilter">{{ item.tag.name }}</el-tag>
+              {{ item.title }}
             </p>
             <p class="desc">
               {{ item.description }}
@@ -37,8 +38,11 @@
                 <span class="readings">{{ item.clicked }}</span>
               </span>
               <span class="likes">
-              <i class="el-icon-star-on">&nbsp;&nbsp;{{ item.likes }}</i>
-            </span>
+                <i class="el-icon-star-on">&nbsp;&nbsp;{{ item.likes }}</i>
+              </span>
+              <span class="talks">
+                <i class="el-icon-chat-dot-round">&nbsp;&nbsp;{{ item.talks.length }}</i>
+              </span>
             </p>
           </div>
         </div>
@@ -57,6 +61,16 @@ import { getHomeArticleList } from '../../../api/article'
 
 export default {
   name: 'Index',
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        1: 'success',
+        2: 'info',
+        3: 'danger'
+      }
+      return statusMap[status]
+    }
+  },
   data() {
     return {
       showMore: false,
@@ -73,7 +87,8 @@ export default {
   computed: {
     ...mapGetters([
       'site_name',
-      'site_desc'
+      'site_desc',
+      'id'
     ])
   },
   created() {
@@ -129,7 +144,11 @@ export default {
       this.page += 1
       this.tagArticles(true)
     },
-    goRead(id) {
+    goRead(id, type) {
+      if (type === 1 && (this.id === '' || this.id === undefined || this.id === null)) {
+        this.$message.error('该篇文章需要登录才能查看!')
+        return
+      }
       const url = this.$router.resolve({ name: 'homeArticle', params: { article_id: id }})
       window.open(url.href, '_blank')
     }
@@ -269,7 +288,7 @@ export default {
       .readings {
         padding: 0 5px;
       }
-      .read, .likes{
+      .read, .likes,.talks{
         margin-left: 10px;
       }
     }

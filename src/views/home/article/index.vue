@@ -37,7 +37,9 @@
           <p>赞</p>
         </div>
       </div>
-      <div class="footer" />
+      <div class="footer">
+        <TalkList :article-id="Number(articleId)" :is-article="true" />
+      </div>
     </el-col>
   </el-row>
 </template>
@@ -46,9 +48,13 @@
 import { getArticleRow, articleLike } from '../../../api/article'
 import './css/markdown.css'
 import { mapGetters } from 'vuex'
+import TalkList from '../components/talkList'
 
 export default {
   name: 'Index',
+  components: {
+    TalkList
+  },
   data() {
     return {
       articleId: 0,
@@ -60,7 +66,8 @@ export default {
     ...mapGetters([
       'site_author',
       'site_icon_url',
-      'site_who'
+      'site_who',
+      'id'
     ])
   },
   created() {
@@ -70,6 +77,7 @@ export default {
         message: '无ID',
         type: 'error'
       })
+      return
     }
     this.article()
   },
@@ -77,15 +85,26 @@ export default {
     async article() {
       const res = await getArticleRow({ id: this.articleId, add_click: this.addClickNum })
       if (res.code === 1) {
+        if (res.data.type === 1 && (this.id === '' || this.id === undefined || this.id === null)) {
+          this.$message.error('该篇文章需要登录才能查看哟!')
+          return
+        }
         this.articleRow = res.data
       }
     },
 
     async clickLiked() {
-      const result = await articleLike({ id: this.articleId })
+      if (this.id === undefined || this.id === '') {
+        this.$message({
+          message: '非常感谢您的赞同,不过请登录后再操作哟',
+          type: 'info'
+        })
+        return
+      }
+      const result = await articleLike({ user_id: this.id, id: this.articleId })
       if (result.code === 1) {
         this.$message({
-          message: '点赞成功,每天只对它点赞5次哟',
+          message: '点赞成功',
           type: 'success'
         })
         this.addClickNum = 0

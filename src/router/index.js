@@ -74,6 +74,20 @@ export const constantRoutes = [
         component: () => import('@/views/home/article/index'),
         meta: { title: '文章', icon: 'book' },
         hidden: true
+      },
+      {
+        path: '/home/user',
+        name: 'homeUser',
+        component: () => import('@/views/home/user/index'),
+        meta: { title: '个人中心', icon: 'people' },
+        hidden: true
+      },
+      {
+        path: '/home/talks',
+        name: 'homeTalks',
+        component: () => import('@/views/home/talks/index'),
+        meta: { title: '留言', icon: 'people' },
+        hidden: true
       }
     ]
   },
@@ -87,6 +101,20 @@ export const constantRoutes = [
       component: () => import('@/views/admin/dashboard/index'),
       meta: { title: '看板', icon: 'dashboard' }
     }]
+  },
+
+  // 用户管理
+  {
+    path: '/admin/user',
+    component: Layout,
+    children: [
+      {
+        path: '/admin/user/list',
+        name: 'userList',
+        component: () => import('@/views/admin/user/index'),
+        meta: { title: '用户管理', icon: 'user' }
+      }
+    ]
   },
   // 标签管理
   {

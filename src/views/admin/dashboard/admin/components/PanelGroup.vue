@@ -20,7 +20,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            总点击数
+            总用户数
           </div>
           <count-to :start-val="0" :end-val="Number(clickedCounts)" :duration="1000" class="card-panel-num" />
         </div>
@@ -33,7 +33,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            总赞数数
+            总赞数
           </div>
           <count-to :start-val="0" :end-val="Number(likesCounts)" :duration="1000" class="card-panel-num" />
         </div>
@@ -44,7 +44,7 @@
 
 <script>
 import CountTo from 'vue-count-to'
-import { getArticleCount, getClickedCount, getLikesCount } from '../../../../../api/site'
+import { getArticleCount, getTotalUsers, getLikesCount } from '../../../../../api/site'
 
 export default {
   components: {
@@ -59,7 +59,7 @@ export default {
   },
   created() {
     this.articleCount()
-    this.clickedCount()
+    this.totalUsers()
     this.likesCount()
   },
   methods: {
@@ -72,8 +72,8 @@ export default {
         this.articleCounts = res.data
       }
     },
-    async clickedCount() {
-      const res = await getClickedCount()
+    async totalUsers() {
+      const res = await getTotalUsers()
       if (res.code === 1) {
         this.clickedCounts = res.data
       }

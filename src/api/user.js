@@ -31,6 +31,53 @@ export function getInfo() {
   })
 }
 
+export function userList(params) {
+  return request({
+    url: '/user/list',
+    method: 'get',
+    params
+  })
+}
+export function likeHistory(params) {
+  return request({
+    url: '/user/likeHistory',
+    method: 'get',
+    params
+  })
+}
+
+export function talkList(params) {
+  return request({
+    url: '/user/talkList',
+    method: 'get',
+    params
+  })
+}
+
+export function edit(data) {
+  return request({
+    url: '/user/edit',
+    method: 'post',
+    data
+  })
+}
+
+export function talk(data) {
+  return request({
+    url: '/user/talk',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteTalk(data) {
+  return request({
+    url: '/user/deleteTalk',
+    method: 'post',
+    data
+  })
+}
+
 export function logout() {
   return request({
     url: '/user/out',

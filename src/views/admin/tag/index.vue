@@ -8,7 +8,12 @@
           </el-form-item>
           <el-form-item>
             <el-select v-model="searchParams.is_hide" placeholder="是否隐藏" multiple filterable clearable>
-              <statusComponent></statusComponent>
+              <statusComponent />
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="searchParams.type" placeholder="类型" multiple filterable clearable>
+              <typeMapping />
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -45,6 +50,15 @@
           >
             <template slot-scope="{row}">
               <el-tag :type="row.is_hide | statusFilter">{{ row.is_hide_name }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
+                  prop="type"
+                  label="类型"
+                  align="center"
+          >
+            <template slot-scope="{row}">
+              <el-tag :type="row.type | statusFilter">{{ row.type_name }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column
@@ -86,6 +100,7 @@
 import { getTagList, tagDel } from '../../../api/tag'
 import editTag from './components/edit'
 import statusComponent from '../components/status'
+import typeMapping from './components/typeMapping'
 
 export default {
   filters: {
@@ -100,7 +115,8 @@ export default {
   },
   components: {
     editTag,
-    statusComponent
+    statusComponent,
+    typeMapping
   },
   data() {
     return {
@@ -111,7 +127,8 @@ export default {
         page: 1,
         name: '',
         is_hide: [],
-        order: ''
+        order: '',
+        type: ''
       },
       tagList: [],
       total: 0,

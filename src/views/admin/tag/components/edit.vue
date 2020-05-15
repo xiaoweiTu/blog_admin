@@ -15,6 +15,11 @@
             <statusComponent />
           </el-select>
         </el-form-item>
+        <el-form-item label="标签类型" prop="type">
+          <el-select v-model="tagData.type" placeholder="请选择状态">
+            <typeMapping />
+          </el-select>
+        </el-form-item>
         <el-form-item label="标签排序" prop="order">
           <el-input v-model="tagData.order" type="number" min="1" max="128" class="tag-input" placeholder="请选择排序等级" />
         </el-form-item>
@@ -28,12 +33,14 @@
 
 <script>
 import statusComponent from '../../components/status'
+import typeMapping from './typeMapping'
 import { tagSave } from '../../../../api/tag'
 
 export default {
   name: 'EditTag',
   components: {
-    statusComponent
+    statusComponent,
+    typeMapping
   },
   props: {
     visible: {
@@ -52,6 +59,9 @@ export default {
         ],
         is_hide: [
           { required: true, message: '是否隐藏不能为空', trigger: 'blur' }
+        ],
+        type: [
+          { required: true, message: '类型不能为空', trigger: 'blur' }
         ],
         order: [
           { required: true, message: '排序不能为空', trigger: 'blur' }

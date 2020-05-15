@@ -8,9 +8,17 @@ export function getStatus(params) {
   })
 }
 
-export function getType(params) {
+export function getTagType(params) {
   return request({
-    url: '/web/type',
+    url: '/web/tagTypeMapping',
+    method: 'get',
+    params
+  })
+}
+
+export function getArticleType(params) {
+  return request({
+    url: '/web/articleTypeMapping',
     method: 'get',
     params
   })

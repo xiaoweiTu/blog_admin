@@ -20,11 +20,16 @@
             <el-input v-model="searchParams.title" type="text" placeholder="文章标题" />
           </el-form-item>
           <el-form-item>
-            <el-select v-model="searchParams.tag_id" multiple  clearable placeholder="标签">
+            <el-select v-model="searchParams.tag_id" multiple clearable placeholder="标签">
               <el-option v-for="(item) in tagList" :key="item.id" :label="item.name" :value="Number(item.id)">
                 <span style="float: left">{{ item.name }}</span>
                 <span style="float: right; color: #8492a6; font-size: 13px">{{ item.type_name }}</span>
               </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-select v-model="searchParams.type" multiple clearable placeholder="类型">
+              <typeMapping />
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -75,6 +80,14 @@
             </template>
           </el-table-column>
           <el-table-column
+            label="类型"
+            align="center"
+          >
+            <template slot-scope="{row}">
+              <el-tag :type="row.type | statusFilter">{{ row.type_name }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
             prop="order"
             label="排序"
             align="center"
@@ -85,6 +98,14 @@
           >
             <template slot-scope="{row}">
               <el-tag v-if="row.tag" :type="row.tag.is_hide | statusFilter">{{ row.tag.name }}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="标签类型"
+            align="center"
+          >
+            <template slot-scope="{row}">
+              <el-tag :type="row.tag.type | statusFilter">{{ row.tag.type_name }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column
@@ -119,6 +140,7 @@
 <script>
 import { getArticleList, articleDel } from '../../../api/article'
 import { getAllTags } from '../../../api/tag'
+import typeMapping from './components/typeMapping'
 
 export default {
   filters: {
@@ -130,6 +152,9 @@ export default {
       }
       return statusMap[status]
     }
+  },
+  components: {
+    typeMapping
   },
   data() {
     return {

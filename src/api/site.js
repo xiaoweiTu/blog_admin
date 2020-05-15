@@ -16,9 +16,9 @@ export function getArticleCount(params) {
   })
 }
 
-export function getClickedCount(params) {
+export function getTotalUsers(params) {
   return request({
-    url: '/web/totalClicked',
+    url: '/web/totalUsers',
     method: 'get',
     params
   })
@@ -34,7 +34,7 @@ export function getLikesCount(params) {
 
 export function getArticlesInSeven(params) {
   return request({
-    url: '/web/articlesInSeven',
+    url: '/web/articlesSta',
     method: 'get',
     params
   })
@@ -42,7 +42,7 @@ export function getArticlesInSeven(params) {
 
 export function getClickedInSeven(params) {
   return request({
-    url: '/web/clickedInSeven',
+    url: '/web/userSta',
     method: 'get',
     params
   })
@@ -50,7 +50,7 @@ export function getClickedInSeven(params) {
 
 export function getLikesInSeven(params) {
   return request({
-    url: '/web/likesInSeven',
+    url: '/web/likesSta',
     method: 'get',
     params
   })

@@ -27,6 +27,11 @@
               <statusComponent />
             </el-select>
           </el-form-item>
+          <el-form-item label-width="150px" label="文章类型" prop="type">
+            <el-select v-model="articleParams.type" placeholder="文章类型">
+              <typeMapping />
+            </el-select>
+          </el-form-item>
           <el-form-item label-width="150px" label="标签" prop="tag_id">
             <el-select v-model="articleParams.tag_id" clearable placeholder="标签">
               <el-option v-for="(item) in tagList" :key="item.id" :label="item.name" :value="Number(item.id)">
@@ -69,10 +74,11 @@ import { getAllTags } from '../../../api/tag'
 import statusComponent from '../components/status'
 import { mapGetters } from 'vuex'
 import { getToken } from '../../../utils/auth'
+import typeMapping from './components/typeMapping'
 
 export default {
   name: 'EditArticle',
-  components: { MarkdownEditor, statusComponent, Tinymce },
+  components: { MarkdownEditor, statusComponent, Tinymce, typeMapping },
   data() {
     return {
       articleParams: {
@@ -80,6 +86,7 @@ export default {
         is_hide: 0,
         tag_id: '',
         order: 100,
+        type: '',
         content: '',
         icon: '',
         description: '',
@@ -104,12 +111,15 @@ export default {
         ],
         order: [
           { required: true, message: '排序不能为空', trigger: 'blur' }
+        ],
+        type: [
+          { required: true, message: '类型不能为空', trigger: 'blur' }
         ]
       },
       article_id: 0,
       tagList: [],
       uploadAction: '',
-      uploadHeaders: '',
+      uploadHeaders: ''
     }
   },
   computed: {
@@ -138,6 +148,7 @@ export default {
           this.articleParams.icon = res.data.icon
           this.articleParams.description = res.data.description
           this.articleParams.editor_type = res.data.editor_type
+          this.articleParams.type = res.data.type
           if (res.data.editor_type === 0) {
             this.markdownContent = this.$refs.markdownEditor.setHtml(res.data.content)
           } else {
