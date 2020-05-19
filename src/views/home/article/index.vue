@@ -17,9 +17,9 @@
             <span class="reading">
               <i class="el-icon-view">&nbsp;&nbsp;{{ articleRow.clicked }}</i>
             </span>
-            <!--<span class="talks">-->
-            <!--<i class="el-icon-chat-dot-round">&nbsp;&nbsp;154</i>-->
-            <!--</span>-->
+            <span class="talks">
+            <i class="el-icon-chat-dot-round">&nbsp;&nbsp;{{ articleRow.talks.length }}</i>
+            </span>
             <span class="likes">
               <i class="el-icon-star-on">&nbsp;&nbsp;{{ articleRow.likes }}</i>
             </span>

@@ -125,7 +125,10 @@ export default {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
-            this.loading = false
+            const _this = this
+            setTimeout(function() {
+              _this.loading = false
+            }, 2000)
           })
         } else {
           console.log('error submit!!')

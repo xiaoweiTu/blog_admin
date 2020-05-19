@@ -26,6 +26,7 @@
           <div class="item-content">
             <p class="title">
               <el-tag :type="item.tag.type | statusFilter">{{ item.tag.name }}</el-tag>
+              <el-tag v-if="item.type === 1" type="warning">{{ item.type_name }}</el-tag>
               {{ item.title }}
             </p>
             <p class="desc">
