@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const homeList = ['home', 'homeArticle', 'adminLogin', 'userLogin', 'userRegister', 'homeTalks'] // 不需要登录
+const homeList = ['home', 'homeArticle', 'adminLogin', 'userLogin', 'userRegister', 'homeTalks','userFindPass'] // 不需要登录
 const adminList = ['dashboard', 'TagList', 'ArticleList', 'EditArticle', 'userList'] // 管理员可以进入
 
 router.beforeEach(async(to, from, next) => {

@@ -51,6 +51,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/user/find-pass',
+    name: 'userFindPass',
+    component: () => import('@/views/home/login/find-pass'),
+    hidden: true
+  },
+  {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true

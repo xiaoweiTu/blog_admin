@@ -117,6 +117,8 @@ export default {
       })
       if (res.code === 1) {
         this.content = ''
+        this.toUserId = 0
+        this.toId = 0
         this.getTalkList()
       }
     },

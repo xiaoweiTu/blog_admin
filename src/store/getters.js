@@ -7,6 +7,7 @@ const getters = {
   email: state => state.user.email,
   last_login: state => state.user.last_login,
   last_ip_address: state => state.user.last_ip_address,
+  verify_at: state => state.user.verify_at,
   is_admin: state => state.user.is_admin,
   site_name: state => state.site.site_name,
   site_desc: state => state.site.site_desc,

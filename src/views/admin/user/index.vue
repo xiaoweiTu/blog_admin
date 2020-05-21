@@ -24,12 +24,12 @@
           </el-form-item>
           <el-form-item>
             <el-select v-model="search.status" multiple clearable placeholder="用户状态">
-              <StatusOption></StatusOption>
+              <StatusOption />
             </el-select>
           </el-form-item>
           <el-form-item>
             <el-select v-model="search.is_admin" placeholder="是否管理员" multiple filterable clearable>
-              <IsAdminOption></IsAdminOption>
+              <IsAdminOption />
             </el-select>
           </el-form-item>
         </el-form>
@@ -88,6 +88,11 @@
             align="center"
           />
           <el-table-column
+            prop="verify_at"
+            label="激活时间"
+            align="center"
+          />
+          <el-table-column
             label="操作"
             align="center"
             width="250px"
@@ -107,7 +112,7 @@
         />
       </el-col>
     </el-row>
-    <EditDialog :show.sync="showEditDialog" :row="editData" @closeDialog="showEditDialog = false" @getUserList="getUserList"></EditDialog>
+    <EditDialog :show.sync="showEditDialog" :row="editData" @closeDialog="showEditDialog = false" @getUserList="getUserList" />
   </div>
 </template>
 <script>

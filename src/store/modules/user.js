@@ -10,7 +10,8 @@ const getDefaultState = () => {
     is_admin: 0,
     id: '',
     last_login: '',
-    last_ip_address: ''
+    last_ip_address: '',
+    verify_at: ''
   }
 }
 
@@ -40,6 +41,9 @@ const mutations = {
   },
   SET_LAST_IP_ADDRESS: (state, last_ip_address) => {
     state.last_ip_address = last_ip_address
+  },
+  SET_VERIFY_AT: (state, verifyAt) => {
+    state.verify_at = verifyAt
   }
 }
 
@@ -58,6 +62,7 @@ const actions = {
           commit('SET_IS_ADMIN', data.user.is_admin)
           commit('SET_LAST_LOGIN', data.user.last_login)
           commit('SET_LAST_IP_ADDRESS', data.user.last_ip_address)
+          commit('SET_VERIFY_AT', data.user.verify_at)
           setToken(data.token)
         } else {
           throw new Error(msg)
@@ -81,6 +86,7 @@ const actions = {
           commit('SET_IS_ADMIN', data.user.is_admin)
           commit('SET_LAST_LOGIN', data.user.last_login)
           commit('SET_LAST_IP_ADDRESS', data.user.last_ip_address)
+          commit('SET_VERIFY_AT', data.user.verify_at)
           setToken(data.token)
         } else {
           throw new Error(msg)
@@ -102,6 +108,7 @@ const actions = {
           commit('SET_EMAIL', data.user.email)
           commit('SET_ID', data.user.id)
           commit('SET_IS_ADMIN', data.user.is_admin)
+          commit('SET_VERIFY_AT', data.user.verify_at)
           setToken(data.token)
         } else {
           throw new Error(msg)
@@ -116,13 +123,14 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const { name, id, email, is_admin, last_login, last_ip_address } = response.data
+        const { name, id, email, is_admin, last_login, last_ip_address,verify_at } = response.data
         commit('SET_NAME', name)
         commit('SET_ID', id)
         commit('SET_EMAIL', email)
         commit('SET_IS_ADMIN', is_admin)
         commit('SET_LAST_LOGIN', last_login)
         commit('SET_LAST_IP_ADDRESS', last_ip_address)
+        commit('SET_VERIFY_AT', verify_at)
         resolve()
       }).catch(error => {
         reject(error)

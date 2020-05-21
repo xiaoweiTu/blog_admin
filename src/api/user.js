@@ -54,6 +54,40 @@ export function talkList(params) {
   })
 }
 
+export function verifyCode(data) {
+  return request({
+    url: '/user/verifyCode',
+    method: 'post',
+    data
+  })
+}
+
+export function sendVerifyCode(data) {
+  return request({
+    url: '/user/sendVerifyCode',
+    method: 'post',
+    data
+  })
+}
+
+// 发送找回密码的令牌到邮箱
+export function sendFindPassCode(data) {
+  return request({
+    url: '/user/sendFindPassCode',
+    method: 'post',
+    data
+  })
+}
+
+// 修改密码
+export function updatePass(data) {
+  return request({
+    url: '/user/updatePass',
+    method: 'post',
+    data
+  })
+}
+
 export function edit(data) {
   return request({
     url: '/user/edit',
