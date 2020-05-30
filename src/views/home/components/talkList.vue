@@ -23,7 +23,7 @@
                       回复
                       <span class="bold">{{ childItem.to_user.name }}</span> - 提交于
                       <span class="font-ita">{{ childItem.created_at }}</span>
-                      <el-button size="mini" class="fr" @click="openTalkDialog(item.id,item.user_id)">回复</el-button></p>
+                      <el-button size="mini" class="fr" @click="openTalkDialog(item.id,childItem.user_id)">回复</el-button></p>
                   </el-card>
                 </el-timeline-item>
               </el-timeline>
