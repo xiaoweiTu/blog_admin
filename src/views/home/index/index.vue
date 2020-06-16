@@ -3,7 +3,7 @@
     <el-col :span="24">
       <div class="poster">
         <div class="icon-name">
-          <img src="http://qiniu.txwei.cn/Fut1P7edmWvCqvm5mztihRpOzQzO" alt="" class="icon">
+          <img src="http://qiniu.txwei.cn/shadow-icon" alt="" class="icon">
           <span class="name">{{ site_name }}</span>
         </div>
         <div class="desc">{{ site_desc }}</div>
