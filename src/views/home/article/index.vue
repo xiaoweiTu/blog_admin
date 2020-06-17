@@ -49,6 +49,7 @@ import { getArticleRow, articleLike } from '../../../api/article'
 import './css/markdown.css'
 import { mapGetters } from 'vuex'
 import TalkList from '../components/talkList'
+import Marked from 'marked'
 
 export default {
   name: 'Index',
@@ -90,6 +91,7 @@ export default {
           return
         }
         this.articleRow = res.data
+        console.log(Marked(this.articleRow.content))
       }
     },
 
